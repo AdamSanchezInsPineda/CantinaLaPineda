@@ -29,5 +29,17 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('000000'),
             'role' => 'user'
         ]);
+
+        Category::factory()->create([
+            'name' => 'bocadillos'
+        ]);
+
+        Category::factory()->create([
+            'name' => 'bebidas'
+        ]);
+
+        Category::factory()->create([
+            'name' => 'snacks'
+        ]);
     }
 }

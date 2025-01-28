@@ -22,24 +22,5 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('000000'),
             'role' => 'admin'
         ]);
-
-        User::factory()->create([
-            'name' => 'User',
-            'email' => 'user@example.com',
-            'password' => Hash::make('000000'),
-            'role' => 'user'
-        ]);
-
-        Category::factory()->create([
-            'name' => 'bocadillos'
-        ]);
-
-        Category::factory()->create([
-            'name' => 'bebidas'
-        ]);
-
-        Category::factory()->create([
-            'name' => 'snacks'
-        ]);
     }
 }

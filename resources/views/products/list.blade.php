@@ -30,9 +30,13 @@
                             <p class="text-sm">{{ $product->stock }} uds</p>
                         </div>              
                     </div>
-                    <div>
-                        <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3">Editar</button>
-                        <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3">Borrar</button>
+                    <div class="flex">
+                        <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px]">Editar</button>
+                        <form action="{{ route('product.destroy', $product->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('¿Seguro que quieres borrar este producto?')" class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 h-[40px]">Borrar</button>
+                        </form>
                     </div>
                 </div>
             @endforeach

@@ -13,7 +13,7 @@
 
         <header class="flex justify-between items-center pt-10 border-b-2 mb-12">
             <b class="text-2xl ml-10">Categorias:</b>
-            <a href="category/create"><button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3">+ Crear categoria</button></a>
+            <a href="category/create"><button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">+ Crear categoria</button></a>
         </header>
 
         <main class="flex flex-col gap-8">
@@ -26,11 +26,11 @@
                         </div>              
                     </div>
                     <div class="flex">
-                        <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px]">Editar</button>
+                        <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Editar</button>
                         <form action="{{ route('category.destroy', $category->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('¿Seguro que quieres borrar esta categoria?')" class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 h-[40px]">Borrar</button>
+                            <button type="submit" onclick="return confirm('¿Seguro que quieres borrar esta categoria?')" class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 h-[40px] hover:bg-gray-700">Borrar</button>
                         </form>
                     </div>
                 </div>

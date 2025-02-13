@@ -29,13 +29,23 @@
         </div>
 
         <div class="flex items-center gap-60 mt-10">
-            <div class="flex items-center gap-12">
-                <label for="featured">Producto destacado?</label>
-                <input type="checkbox" name="featured" id="featured">
+            <div>
+                <label for="category_id">Categoria:</label>
+                <select name="category_id" id="category_id">
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="flex flex-col ml-7">
                 <label for="code">Codigo del producto:</label>
                 <input type="text" name="code" id="code" placeholder="ca123-pr">
+            </div>
+        </div>
+        <div class="flex items-center gap-60 mt-10">
+            <div class="flex items-center gap-5">
+                <label for="featured">Producto destacado?</label>
+                <input type="checkbox" name="featured" id="featured">
             </div>
         </div>
 

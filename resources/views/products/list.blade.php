@@ -32,7 +32,7 @@
                         </div>              
                     </div>
                     <div class="flex">
-                        <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Editar</button>
+                        <a href="{{ route('product.edit', $product->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Editar</a>
                         <form action="{{ route('product.destroy', $product->id) }}" method="POST">
                             @csrf
                             @method('DELETE')

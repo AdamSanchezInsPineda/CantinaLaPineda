@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->boolean('featured')->default(false);
             $table->timestamps();
+            $table->json('images')->nullable();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });

@@ -59,7 +59,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+        $categories = Category::all();
+        return view("products.edit_form", compact('product', 'categories'));
     }
 
     /**
@@ -67,7 +69,25 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'category_id'  => 'required|exists:categories,id',
+            'code'         => 'required|string|max:50|unique:products,code,' . $id,
+            'name'         => 'required|string|max:255',
+            'description'  => 'nullable|string|max:500',
+            'price'        => 'required|numeric|min:0',
+            'stock'        => 'required|integer|min:0',
+            'featured'     => 'boolean',
+            'images'       => 'nullable|array',
+            'images.*'     => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        $product->update(array_merge($validatedData, [
+            'featured' => $request->has('featured'),
+        ]));
+
+        return redirect()->route('product.index');
     }
 
     /**

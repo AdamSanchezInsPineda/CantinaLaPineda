@@ -25,7 +25,7 @@
             </div>
             <div class="flex flex-col">
                 <label for="price">Precio:</label>
-                <input type="number"  name="price" id="price" step="0.01" placeholder="1.23" value="{{ $product->price }}">
+                <input type="number"  name="price" id="price" step="0.01" placeholder="1.23" value="{{ number_format($product->price, 2, '.', '') }}">
             </div>
         </div>
 

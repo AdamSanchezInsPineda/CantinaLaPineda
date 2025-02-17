@@ -15,7 +15,18 @@ class ProductController extends Controller
     {
         //
         $products = Product::all();
-        return view("products.list", compact('products'));
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                return view("products.list", compact('products'));
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -24,8 +35,19 @@ class ProductController extends Controller
     public function create()
     {
         //
-        $categories = Category::all();
-        return view("products.create_form", compact('categories'));
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                $categories = Category::all();
+                return view("products.create_form", compact('categories'));
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -34,16 +56,27 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        Product::create([
-            'name' => request('name'),
-            'description' => request('description'),
-            'stock' => request('stock'),
-            'price' => request('price'),
-            'featured' => request('featured'),
-            'code' => request('code'),
-            'category_id' => request('category_id')
-        ]);
-        return redirect()->route('product.index');
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                Product::create([
+                    'name' => request('name'),
+                    'description' => request('description'),
+                    'stock' => request('stock'),
+                    'price' => request('price'),
+                    'featured' => request('featured'),
+                    'code' => request('code'),
+                    'category_id' => request('category_id')
+                ]);
+                return redirect()->route('product.index');
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -96,8 +129,19 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
-        $product = Product::findOrFail($id);
-        $product->delete();
-        return redirect()->route('product.index');
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                $product = Product::findOrFail($id);
+                $product->delete();
+                return redirect()->route('product.index');
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 }

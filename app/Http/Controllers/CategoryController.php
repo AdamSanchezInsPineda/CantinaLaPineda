@@ -14,7 +14,18 @@ class CategoryController extends Controller
     {
         //
         $categories = Category::all();
-        return view("categories.list", compact('categories'));
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                return view("categories.list", compact('categories'));
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -23,7 +34,18 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view("categories/create_form");
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                return view("categories/create_form");
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -32,10 +54,21 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-        Category::create([
-            'name' => request('name')
-        ]);
-        return redirect()->route('category.index');
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                Category::create([
+                    'name' => request('name')
+                ]);
+                return redirect()->route('category.index');
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -68,8 +101,19 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         //
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return redirect()->route('category.index');
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                $category = Category::findOrFail($id);
+                $category->delete();
+                return redirect()->route('category.index');
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 }

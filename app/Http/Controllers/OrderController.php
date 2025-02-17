@@ -13,6 +13,19 @@ class OrderController extends Controller
     public function index()
     {
         //
+        $orders = Order::all();
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                return view("orders.list", compact('orders'));
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**

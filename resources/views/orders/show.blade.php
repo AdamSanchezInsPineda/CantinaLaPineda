@@ -25,9 +25,12 @@
                     </div>
                 </div>
             @endforeach
-            <div class="flex justify-center align-center gap-20">
-                <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Aceptar pedido</button>
-                <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Denegar pedido</button>
+            <div class="flex flex-col gap-8">
+                <b class="flex justify-center align-center text-xl">Total del pedido: {{ $order->total_price }} €</b>
+                <div class="flex justify-center align-center">
+                    <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Aceptar pedido</button>
+                    <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Denegar pedido</button>
+                </div>
             </div>
         </main>
     </div>

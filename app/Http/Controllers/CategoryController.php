@@ -85,6 +85,19 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         //
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                $category = Category::find($id);
+                return view("categories.edit_form", compact('category'));
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -93,6 +106,17 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $validatedData = $request->validate([
+            'name'         => 'required|string|max:20',
+        ]);
+
+        $category = Category::findOrFail($id);
+
+        $category->update(array_merge($validatedData, [
+            'featured' => $request->has('featured'),
+        ]));
+
+        return redirect()->route('category.index');
     }
 
     /**

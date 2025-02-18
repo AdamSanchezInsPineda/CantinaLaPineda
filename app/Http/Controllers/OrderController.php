@@ -13,11 +13,14 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = Order::all();
+        $pendingOrders = Order::where('status', 'ordered')->whereDate('order_date', today()->toDateString())->get();
+        $confirmedOrders = Order::where('status', 'confirmed')->whereDate('order_date', today()->toDateString())->get();
+        $deniedOrders = Order::where('status', 'denied')->whereDate('order_date', today()->toDateString())->get();
+        $allOrders = Order::get();
         if (auth()->check()) {
             $user = auth()->user();
             if ($user->role == "admin") {
-                return view("orders.list", compact('orders'));
+                return view("orders.list", compact('pendingOrders', 'confirmedOrders', 'deniedOrders', 'allOrders'));
             }
             else {
                 return redirect()->route('dashboard');

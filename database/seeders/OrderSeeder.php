@@ -16,18 +16,26 @@ class OrderSeeder extends Seeder
     {
         Order::factory()->create([
             'user_id' => 1,
-            'total_price' => 149.97,
+            'total_price' => 5.15,
             'status' => 'ordered',
-            'order_date' => '2025-01-15',
+            'order_date' => now(),
             'confirmation_date' => null
         ]);
 
         Order::factory()->create([
             'user_id' => 1,
-            'total_price' => 89.98,
+            'total_price' => 12.25,
             'status' => 'ordered',
-            'order_date' => '2025-02-10',
+            'order_date' => now(),
             'confirmation_date' => null
+        ]);
+
+        Order::factory()->create([
+            'user_id' => 1,
+            'total_price' => 3.45,
+            'status' => 'confirmed',
+            'order_date' => now(),
+            'confirmation_date' => now()
         ]);
     }
 }

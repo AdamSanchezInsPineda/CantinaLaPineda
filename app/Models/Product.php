@@ -20,6 +20,6 @@ class Product extends Model
         return $this->hasMany(Image::class);
     }
     public function orders(): BelongsToMany {
-        return $this->belongsToMany(Order::class, 'order_products');
+        return $this->belongsToMany(Order::class, 'order_products')->withPivot('quantity');;
     }
 }

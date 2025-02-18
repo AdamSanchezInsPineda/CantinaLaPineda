@@ -53,6 +53,19 @@ class OrderController extends Controller
     public function show(string $id)
     {
         //
+        $order = Order::with('products')->findOrFail($id);
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                return view('orders.show', compact('order'));
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**

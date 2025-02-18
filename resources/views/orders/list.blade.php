@@ -23,19 +23,19 @@
                         <div class="flex items-center gap-4 ml-6">
                             <div>
                                 <b class="text-xl ml-5">{{ $order->total_price }} €</b>
-                                <p class="text-lg ml-5">{{ $order->order_date }}</p>
+                                <p class="text-lg ml-5">Pedido en {{ $order->order_date }}</p>
                                 <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
                             </div>              
                         </div>
                         <div class="flex">
                             <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Aceptar pedido</button>
                             <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Denegar pedido</button>
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
+                            <a href="{{ route('order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
                                 </svg>
                                 <span>Mostrar información</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                     
@@ -49,17 +49,18 @@
                         <div class="flex items-center gap-4 ml-6">
                             <div>
                                 <b class="text-xl ml-5">{{ $order->total_price }} €</b>
-                                <p class="text-lg ml-5">{{ $order->order_date }}</p>
+                                <p class="text-lg ml-5">Pedido en {{ $order->order_date }}</p>
+                                <p class="text-lg ml-5">Aceptado en {{ $order->confirmation_date }}</p>
                                 <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
                             </div>              
                         </div>
                         <div class="flex">
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
+                            <a href="{{ route('order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
                                 </svg>
                                 <span>Mostrar información</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                     
@@ -73,17 +74,18 @@
                         <div class="flex items-center gap-4 ml-6">
                             <div>
                                 <b class="text-xl ml-5">{{ $order->total_price }} €</b>
-                                <p class="text-lg ml-5">{{ $order->order_date }}</p>
+                                <p class="text-lg ml-5">Pedido en {{ $order->order_date }}</p>
+                                <p class="text-lg ml-5">Denegado en {{ $order->confirmation_date }}</p>
                                 <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
                             </div>              
                         </div>
                         <div class="flex">
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
+                            <a href="{{ route('order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
                                 </svg>
                                 <span>Mostrar información</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                     
@@ -97,17 +99,17 @@
                         <div class="flex items-center gap-4 ml-6">
                             <div>
                                 <b class="text-xl ml-5">{{ $order->total_price }} €</b>
-                                <p class="text-lg ml-5">{{ $order->order_date }}</p>
+                                <p class="text-lg ml-5">Pedido en {{ $order->order_date }}</p>
                                 <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
                             </div>              
                         </div>
                         <div class="flex">
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
+                            <a href="{{ route('order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
                                 </svg>
                                 <span>Mostrar información</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                     

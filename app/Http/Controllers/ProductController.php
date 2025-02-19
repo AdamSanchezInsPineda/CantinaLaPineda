@@ -14,14 +14,16 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::all();
         if (auth()->check()) {
             $user = auth()->user();
             if ($user->role == "admin") {
+                $products = Product::all();
                 return view("products.list", compact('products'));
             }
             else {
-                return redirect()->route('dashboard');
+                $products = Product::where('featured', true)->get();
+                $categories = Category::all();
+                return view("products.store_list", compact('products', 'categories'));
             }
         } 
         else {

@@ -3,7 +3,7 @@
     <h1 class="flex items-center justify-center text-4xl">
         <div class="mt-3">Editar producto {{ $product->name }}:</div>
     </h1>
-    <form action="{{ route('product.update', $product->id) }}" method="post" class="flex items-center justify-center flex-col">
+    <form action="{{ route('product.update', $product->id) }}" method="post" enctype="multipart/form-data" class="flex items-center justify-center flex-col">
         @csrf
         @method('PUT')
 
@@ -47,6 +47,12 @@
             <div class="flex items-center gap-5">
                 <label for="featured">Producto destacado?</label>
                 <input type="checkbox" name="featured" id="featured" value="1" {{ $product->featured ? 'checked' : '' }}>
+            </div>
+        </div>
+        <div>
+            <div>
+                <label for="images">Subir imágenes:</label>
+                <input type="file" name="images[]" multiple accept="image/*">
             </div>
         </div>
 

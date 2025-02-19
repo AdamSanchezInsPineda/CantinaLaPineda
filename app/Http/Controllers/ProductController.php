@@ -59,15 +59,32 @@ class ProductController extends Controller
         if (auth()->check()) {
             $user = auth()->user();
             if ($user->role == "admin") {
-                Product::create([
-                    'name' => request('name'),
-                    'description' => request('description'),
-                    'stock' => request('stock'),
-                    'price' => request('price'),
-                    'featured' => request('featured'),
-                    'code' => request('code'),
-                    'category_id' => request('category_id')
+                $validatedData = $request->validate([
+                    'category_id'  => 'required|exists:categories,id',
+                    'code'         => 'required|string|max:50|unique:products,code,' . $id,
+                    'name'         => 'required|string|max:255',
+                    'description'  => 'nullable|string|max:500',
+                    'price'        => 'required|numeric|min:0',
+                    'stock'        => 'required|integer|min:0',
+                    'featured'     => 'boolean',
+                    'images'       => 'nullable|array',
+                    'images.*'     => 'image|mimes:jpeg,png,jpg,gif|max:2048',
                 ]);
+
+                $imagePaths = [];
+
+                if ($request->hasFile('images')) {
+                    foreach ($request->file('images') as $image) {
+                        $path = $image->store('products', 'public');
+                        $imagePaths[] = $path;
+                    }
+                }
+
+                Product::create(array_merge($validatedData, [
+                    'featured' => $request->has('featured'),
+                    'images' => json_encode($imagePaths)
+                ]));
+
                 return redirect()->route('product.index');
             }
             else {
@@ -113,15 +130,27 @@ class ProductController extends Controller
             'images'       => 'nullable|array',
             'images.*'     => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
         $product = Product::findOrFail($id);
-
+    
+        // Laravel ya maneja los atributos JSON automáticamente
+        $existingImages = $product->images ?? [];
+    
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                $existingImages[] = $path;
+            }
+        }
+    
+        // Guardamos sin json_encode()
         $product->update(array_merge($validatedData, [
             'featured' => $request->has('featured'),
+            'images' => $existingImages, // Laravel lo convertirá a JSON automáticamente
         ]));
-
-        return redirect()->route('product.index');
-    }
+    
+        return redirect()->route('product.index')->with('status', 'Producto actualizado correctamente');
+    }    
 
     /**
      * Remove the specified resource from storage.

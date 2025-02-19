@@ -3,7 +3,7 @@
     <h1 class="flex items-center justify-center text-4xl">
         <div class="mt-3">Crea un nuevo producto:</div>
     </h1>
-    <form action="{{ route('product.store') }}" method="post" class="flex items-center justify-center flex-col">
+    <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data" class="flex items-center justify-center flex-col">
         @csrf
 
         <div class="flex items-center gap-60 mt-10">
@@ -40,6 +40,12 @@
             <div class="flex flex-col ml-7">
                 <label for="code">Codigo del producto:</label>
                 <input type="text" name="code" id="code" placeholder="ca123-pr">
+            </div>
+        </div>
+        <div class="flex items-center gap-60 mt-10">
+            <div class="flex flex-col justify-center items-center gap-5">
+                <label for="images">Subir imágenes:</label>
+                <input type="file" name="images[]" multiple accept="image/*">
             </div>
         </div>
         <div class="flex items-center gap-60 mt-10">

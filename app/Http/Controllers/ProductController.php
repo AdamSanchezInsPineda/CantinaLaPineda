@@ -11,7 +11,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         if (auth()->check()) {
@@ -21,7 +21,13 @@ class ProductController extends Controller
                 return view("products.list", compact('products'));
             }
             else {
-                $products = Product::where('featured', true)->get();
+                $category = $request->input('category'); // recoje la posible categoria clickada por el usuario
+                if ($category == null) {
+                    $products = Product::where('featured', true)->get(); // productos destacados
+                }
+                else {
+                    $products = Product::where('category_id', $category)->get(); // productos de una categoria
+                }
                 $categories = Category::all();
                 return view("products.store_list", compact('products', 'categories'));
             }

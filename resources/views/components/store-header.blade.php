@@ -9,10 +9,10 @@
         </form>
     </div>
     <div class="flex flex-row justify-center items-center gap-10 mb-4">
-        <a href="" class="text-xl"><b>Destacados</b></a>
+        <a href="{{ route('product.index') }}" class="text-xl"><b>Destacados</b></a>
         @foreach($categories as $category)
-            <a href="" class="text-xl">{{ $category->name }}</a>
-        @endforeach
+            <a href="{{ route('product.index', ['category' => $category->id]) }}" class="text-xl">{{ $category->name }}</a>
+        @endforeach        
     </div>  
     <div class="mr-5 flex flex-row justify-center items-center gap-10">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8 mb-4">

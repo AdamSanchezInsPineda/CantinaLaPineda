@@ -87,6 +87,21 @@ class ProductController extends Controller
     public function show(string $id)
     {
         //
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->role == "admin") {
+                $products = Product::all();
+                return view("products.list", compact('products'));
+            }
+            else {
+                $product = Product::where('id', $id)->first();
+                $categories = Category::all();
+                return view("products.show", compact('product', 'categories'));
+            }
+        } 
+        else {
+            return redirect()->route('login');
+        }
     }
 
     /**

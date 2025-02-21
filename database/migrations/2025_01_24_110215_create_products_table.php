@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->float('price');
-            $table->integer('stock');
             $table->boolean('featured')->default(false);
             $table->timestamps();
             $table->json('images')->nullable();

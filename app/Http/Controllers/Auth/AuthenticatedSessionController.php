@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('product.index'));
+        return redirect()->intended(route('admin.product.index'));
     }
 
     /**

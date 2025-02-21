@@ -26,8 +26,8 @@
                         </div>              
                     </div>
                     <div class="flex">
-                        <a href="{{ route('category.edit', $category->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Editar</a>
-                        <form action="{{ route('category.destroy', $category->id) }}" method="POST">
+                        <a href="{{ route('admin.category.edit', $category->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Editar</a>
+                        <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" onclick="return confirm('¿Seguro que quieres borrar esta categoria?')" class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 h-[40px] hover:bg-gray-700">Borrar</button>

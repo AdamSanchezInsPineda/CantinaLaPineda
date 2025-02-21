@@ -3,7 +3,7 @@
     <h1 class="flex items-center justify-center text-4xl">
         <div class="mt-3">Crea una nueva categoria</div>
     </h1>
-    <form action="{{ route('category.update', $category->id) }}" method="post" class="flex items-center justify-center flex-col">
+    <form action="{{ route('admin.category.update', $category->id) }}" method="post" class="flex items-center justify-center flex-col">
         @csrf
         @method('PUT')
         <label for="name" class="mt-10">Nombre de la categoria:</label>

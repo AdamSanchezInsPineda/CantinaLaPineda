@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -12,23 +13,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
         $pendingOrders = Order::where('status', 'ordered')->whereDate('order_date', today()->toDateString())->get();
         $confirmedOrders = Order::where('status', 'confirmed')->whereDate('order_date', today()->toDateString())->get();
         $deniedOrders = Order::where('status', 'denied')->whereDate('order_date', today()->toDateString())->get();
         $allOrders = Order::get();
-        if (auth()->check()) {
-            $user = auth()->user();
-            if ($user->role == "admin") {
-                return view("orders.list", compact('pendingOrders', 'confirmedOrders', 'deniedOrders', 'allOrders'));
-            }
-            else {
-                return redirect()->route('dashboard');
-            }
-        } 
-        else {
-            return redirect()->route('login');
-        }
+
+        return view("admin.orders.list", compact('pendingOrders', 'confirmedOrders', 'deniedOrders', 'allOrders'));
     }
 
     /**
@@ -52,20 +42,9 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
         $order = Order::with('products')->findOrFail($id);
-        if (auth()->check()) {
-            $user = auth()->user();
-            if ($user->role == "admin") {
-                return view('orders.show', compact('order'));
-            }
-            else {
-                return redirect()->route('dashboard');
-            }
-        } 
-        else {
-            return redirect()->route('login');
-        }
+
+        return view('admin.orders.show', compact('order'));
     }
 
     /**

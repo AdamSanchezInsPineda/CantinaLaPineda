@@ -3,7 +3,7 @@
     <h1 class="flex items-center justify-center text-4xl">
         <div class="mt-3">Crea un nuevo producto:</div>
     </h1>
-    <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data" class="flex items-center justify-center flex-col">
+    <form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data" class="flex items-center justify-center flex-col">
         @csrf
 
         <div class="flex items-center gap-60 mt-10">

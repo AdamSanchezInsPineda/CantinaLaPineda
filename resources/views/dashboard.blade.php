@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>-->
-    <div class="ml-[300px]">
+    <div>
 
         <header class="flex justify-between items-center pt-10 border-b-2 mb-12">
             <b class="text-2xl ml-10">Productos:</b>

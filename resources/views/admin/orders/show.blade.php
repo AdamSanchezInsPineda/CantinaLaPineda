@@ -1,6 +1,5 @@
-<x-admin-aside></x-admin-aside>
-<x-app-layout>
-    <div class="ml-[300px]">
+<x-admin-layout>
+    <div>
 
         <header class="flex justify-center items-center pt-10 border-b-2 mb-12">
             <b class="text-4xl mb-10">Detalles del pedido:</b>
@@ -34,4 +33,4 @@
             </div>
         </main>
     </div>
-</x-app-layout>
+</x-admin-layout>

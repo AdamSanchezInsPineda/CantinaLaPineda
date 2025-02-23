@@ -25,6 +25,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', function () {
+        return view('admin.index');
+    })->name('dashboard');
     Route::resource('category', CategoryController::class);
     Route::resource('product', AdminProductController::class);
     Route::resource('order', OrderController::class);

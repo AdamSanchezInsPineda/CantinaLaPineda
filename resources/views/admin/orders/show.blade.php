@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <div class="ml-[300px]">
+    <div>
 
         <header class="flex justify-center items-center pt-10 border-b-2 mb-12">
             <b class="text-4xl mb-10">Detalles del pedido:</b>

@@ -21,7 +21,6 @@
                         <div>
                             <b class="text-xl">{{ $product->name }}</b>
                             <p class="text-lg">{{ number_format($product->price, 2, '.', '') }} €</p>
-                            <p class="text-sm">{{ $product->stock }} uds</p>
                             <p class="text-sm">Categoria: {{ $product->category->name }}</p>
                         </div>              
                     </div>

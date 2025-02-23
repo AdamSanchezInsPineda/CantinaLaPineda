@@ -19,10 +19,6 @@
 
         <div class="flex items-center gap-60 mt-10">
             <div class="flex flex-col">
-                <label for="stock">Stock:</label>
-                <input type="number" name="stock" id="stock" placeholder="20" value="{{ $product->stock }}">
-            </div>
-            <div class="flex flex-col">
                 <label for="price">Precio:</label>
                 <input type="number"  name="price" id="price" step="0.01" placeholder="1.23" value="{{ number_format($product->price, 2, '.', '') }}">
             </div>

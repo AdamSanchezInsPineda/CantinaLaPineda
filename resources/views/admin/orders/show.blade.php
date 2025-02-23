@@ -1,5 +1,4 @@
-<x-admin-aside></x-admin-aside>
-<x-app-layout>
+<x-admin-layout>
     <div class="ml-[300px]">
 
         <header class="flex justify-center items-center pt-10 border-b-2 mb-12">
@@ -34,4 +33,4 @@
             </div>
         </main>
     </div>
-</x-app-layout>
+</x-admin-layout>

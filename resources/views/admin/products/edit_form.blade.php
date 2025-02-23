@@ -1,5 +1,4 @@
-<x-admin-aside></x-admin-aside>
-<x-app-layout>
+<x-admin-layout>
     <h1 class="flex items-center justify-center text-4xl">
         <div class="mt-3">Editar producto {{ $product->name }}:</div>
     </h1>
@@ -58,4 +57,4 @@
 
         <button class="bg-black text-white py-2 px-4 rounded-md mt-5"><input type="submit" value="Guardar" class="cursor-pointer"></button>
     </form>
-</x-app-layout>
+</x-admin-layout>

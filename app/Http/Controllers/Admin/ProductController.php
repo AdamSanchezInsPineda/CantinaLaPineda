@@ -110,7 +110,7 @@ class ProductController extends Controller
             'images' => $existingImages, // Laravel lo convertirá a JSON automáticamente
         ]));
     
-        return redirect()->route('product.index')->with('status', 'Producto actualizado correctamente');
+        return redirect()->route('admin.product.index')->with('status', 'Producto actualizado correctamente');
     }    
 
     /**

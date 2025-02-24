@@ -49,6 +49,8 @@ class PreferenceController extends Controller
     public function edit(string $id)
     {
         //
+        $preference = Preference::find($id);
+        return view("admin.preferences.edit_form", compact('preference'));
     }
 
     /**
@@ -57,6 +59,16 @@ class PreferenceController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $validatedData = $request->validate([
+            'value' => 'required|string|max:20',
+        ]);
+
+        $preference = Preference::findOrFail($id);
+
+        $preference->update(array_merge($validatedData, [
+        ]));
+
+        return redirect()->route('admin.preference.index');
     }
 
     /**

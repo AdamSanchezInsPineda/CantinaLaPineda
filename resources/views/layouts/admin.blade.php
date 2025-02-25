@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 grid grid-cols-[300px_1fr]">
+        <div class="min-h-screen bg-gray-100 lg:grid lg:grid-cols-[300px_1fr]" id="admin-general">
             <x-admin-aside></x-admin-aside>
             <main>
                 {{ $slot }}

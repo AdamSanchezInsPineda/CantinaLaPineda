@@ -2,14 +2,22 @@
     <div>
 
         <header class="flex justify-between items-center pt-10 border-b-2 mb-12">
-            <b class="text-2xl ml-10">Productos:</b>
-            <a href="product/create"><button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">+ Crear producto</button></a>
+            <div class="ml-10 flex gap-5">
+                <button id="toggle-btn" class="lg:hidden"><x-icons.hamburguer class="size-8"/></button>
+                <b class="text-2xl">Productos:</b>
+            </div>
+            <a href="product/create">
+                <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">
+                    <span class="hidden sm:block ">+ Crear producto</span>
+                    <x-icons.create class="size-6 block sm:hidden"/>
+                </button>
+            </a>
         </header>
 
         <main class="flex flex-col gap-8">
 
             @foreach($products as $product)
-                <div class="border-b-2 flex items-center justify-between">
+                <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                     <div class="flex items-center gap-4 ml-6">
                         @if ($product->images)
                             <img src="{{ asset('storage/' . $product->images[0]) }}" width="150">
@@ -24,7 +32,7 @@
                             <p class="text-sm">Categoria: {{ $product->category->name }}</p>
                         </div>              
                     </div>
-                    <div class="flex">
+                    <div class="flex items-center justify-center">
                         <a href="{{ route('admin.product.edit', $product->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Editar</a>
                         <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
                             @csrf
@@ -37,4 +45,5 @@
 
         </main>
     </div>
+    <script src="{{ mix('resources/js/displayadminasidetablet.js') }}" defer></script>
 </x-admin-layout>

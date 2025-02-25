@@ -1,4 +1,5 @@
-<aside class="h-full w-[300px] bg-white p-4 shadow-md border-r-2">
+<aside class="hidden lg:block h-full w-full md:w-[300px] bg-white p-4 shadow-md border-r-2" id="admin-aside">
+    <button id="hide-btn" class="mt-9 ml-6 lg:hidden"><x-icons.cancel class="size-8"/></button>
     <ul class="flex flex-col gap-12">
         <div class="mb-40"></div> <!-- esto no lo ha visto nadie... -->
         <a href="{{ route('admin.product.index') }}">

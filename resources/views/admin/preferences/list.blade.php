@@ -2,7 +2,10 @@
     <div>
 
         <header class="flex justify-between items-center pt-10 border-b-2 mb-12">
-            <b class="text-2xl ml-10">Configuraciones:</b>
+            <div class="ml-10 flex gap-5">
+                <button id="toggle-btn" class="lg:hidden"><x-icons.hamburguer class="size-8"/></button>
+                <b class="text-2xl">Configuraciones:</b>
+            </div>
         </header>
 
         <main class="flex flex-col gap-8">
@@ -25,4 +28,5 @@
 
         </main>
     </div>
+    <script src="{{ mix('resources/js/displayadminasidetablet.js') }}" defer></script>
 </x-admin-layout>

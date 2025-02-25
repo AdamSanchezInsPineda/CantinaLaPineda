@@ -36,5 +36,5 @@
 
         </main>
     </div>
-    <script src="{{ mix('resources/js/displayadminasidetablet.js') }}" defer></script>
+    <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
 </x-admin-layout>

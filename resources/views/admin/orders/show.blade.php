@@ -1,8 +1,9 @@
 <x-admin-layout>
     <div>
 
-        <header class="flex justify-center items-center pt-10 border-b-2 mb-12">
-            <b class="text-4xl mb-10">Detalles del pedido:</b>
+        <header class="flex justify-center items-center gap-5 pt-10 border-b-2 mb-12">
+            <button id="toggle-btn" class="lg:hidden mb-10"><x-icons.hamburguer class="size-8"/></button>
+            <b class="text-4xl mb-10">Detalles:</b>
         </header>
 
         <main class="flex flex-col gap-20">
@@ -15,21 +16,23 @@
                         <div>
                             <b class="text-xl">{{ $product->name }}</b>
                             <p class="text-lg">{{ number_format($product->price, 2, '.', '') }} €</p>
+                            <p class="text-xl sm:hidden">Cantidad: {{ $product->pivot->quantity }}</p>
                             <p class="text-sm">Categoria: {{ $product->category->name }}</p>
                         </div>              
                     </div>
-                    <div class="flex">
-                        <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px]">Cantidad: {{ $product->pivot->quantity }}</button>
+                    <div class="hidden sm:flex">
+                        <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3">Cantidad: {{ $product->pivot->quantity }}</button>
                     </div>
                 </div>
             @endforeach
             <div class="flex flex-col gap-8">
                 <b class="flex justify-center align-center text-xl">Total del pedido: {{ $order->total_price }} €</b>
                 <div class="flex justify-center align-center">
-                    <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Aceptar pedido</button>
-                    <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Denegar pedido</button>
+                    <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 hover:bg-gray-700">Aceptar pedido</button>
+                    <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 hover:bg-gray-700">Denegar pedido</button>
                 </div>
             </div>
         </main>
     </div>
+    <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
 </x-admin-layout>

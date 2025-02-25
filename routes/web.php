@@ -15,6 +15,8 @@ Route::resource('product', PublicProductController::class)->only(['show']);
 
 Route::get('/category/{category_name}', [PublicCategoryController::class, 'show'])->name('category.show');
 
+Route::get('/products/version', [PublicProductController::class, 'getProductsVersion']);
+Route::get('/products/all', [PublicProductController::class, 'getProducts']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

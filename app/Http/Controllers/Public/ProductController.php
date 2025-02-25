@@ -20,4 +20,14 @@ class ProductController extends PublicController
         $product = Product::where('id', $id)->first();
         return view("public.products.show", compact('product'));
     }
+    public function getProductsVersion()
+    {
+        $lastUpdated = Product::orderBy('updated_at', 'desc')->value('updated_at');
+        return response()->json(['last_updated_at' => $lastUpdated]);
+    }
+    public function getProducts()
+    {
+        $products = Product::all();
+        return response()->json($products);
+    }
 }

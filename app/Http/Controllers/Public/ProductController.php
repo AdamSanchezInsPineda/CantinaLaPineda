@@ -18,7 +18,14 @@ class ProductController extends PublicController
     public function show(string $id)
     {
         $product = Product::where('id', $id)->first();
-        return view("public.products.show", compact('product'));
+
+        $images = $product->images ?? [];
+
+        $frontImage = isset($images[0]) ? $images[0] : null;
+
+        $otherImages = array_slice($images, 1);
+
+        return view("public.products.show", compact('product', 'frontImage', 'otherImages'));
     }
     public function getProductsVersion()
     {

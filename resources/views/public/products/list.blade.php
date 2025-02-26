@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-public-layout>
 
     <main class="flex items-center justify-center">
         <div id="products-container" class="w-[90%] flex flex-wrap items-center justify-center gap-10 mt-24">
@@ -24,4 +24,4 @@
         </div>        
     </main>
     <script src="{{ mix('resources/js/productfilter.js') }}" defer></script>
-</x-app-layout>
+</x-public-layout>

@@ -16,6 +16,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
+            <x-store-header :categories="$categories"></x-store-header>
             <main>
                 {{ $slot }}
             </main>

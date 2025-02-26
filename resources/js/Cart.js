@@ -12,8 +12,7 @@ export default class Cart {
             const response = await fetch("/products/all");
             if (!response.ok) throw new Error("Error al obtener productos");
             const products = await response.json();
-            
-            // Guardar productos y timestamp en sessionStorage
+
             this.storage.setItem(this.productsKey, JSON.stringify(products));
             this.storage.setItem(this.cacheTimeKey, Date.now().toString());
             console.log("⚡ Productos actualizados desde el servidor.");

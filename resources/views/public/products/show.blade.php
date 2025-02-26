@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-public-layout>
 
     <main class="flex items-center justify-center">
         <!-- MOSTRAR UN PRODUCTO: PC Y TABLET, PEQUEÑAS DIFERENCIAS EN EL DISEÑO ENTRE ELLOS -->
@@ -25,12 +25,12 @@
         <!-- MOSTRAR UN PRODUCTO: MOVIL -->
         <div class="md:hidden mt-40 flex flex-col gap-5">
             <div class="flex gap-2">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s" alt="" class="min-w-[50px] min-h-[50px] max-w-[75px] max-h-[75px] rounded-md">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s" alt="" class="min-w-[50px] min-h-[50px] max-w-[75px] max-h-[75px] rounded-md">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s" alt="" class="min-w-[50px] min-h-[50px] max-w-[75px] max-h-[75px] rounded-md">
+                @foreach ($otherImages as $image)
+                <img src="{{ $image ? asset('storage/' . $image) : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s"}}" alt="" class="min-w-[50px] min-h-[50px] max-w-[75px] max-h-[75px] rounded-md">
+                @endforeach
             </div>
             <div class="flex items-center justify-center">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s" alt="" class="min-w-[300px] min-h-[300px] rounded-md">
+                <img src="{{ $frontImage ? asset('storage/' . $frontImage) : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s"}}" alt="" class="min-w-[300px] min-h-[300px] rounded-md">
             </div>
             <div class="w-[300px] flex flex-col gap-2">
                 <b class="text-3xl">{{ $product->name }}</b>
@@ -44,4 +44,4 @@
         </div>
     </main>
     
-</x-app-layout>
+</x-public-layout>

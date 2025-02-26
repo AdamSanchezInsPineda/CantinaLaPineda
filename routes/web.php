@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\ProductController as PublicProductController;
 use App\Http\Controllers\Public\CategoryController as PublicCategoryController;
+use App\Http\Controllers\Public\UserController as PublicUserController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Admin\PreferenceController;
 Route::get('/', [PublicProductController::class, 'index'])->name('product.index');
 
 Route::resource('product', PublicProductController::class)->only(['show']);
+Route::resource('user', PublicUserController::class)->only(['show']);
 
 Route::get('/category/{category_name}', [PublicCategoryController::class, 'show'])->name('category.show');
 

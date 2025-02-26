@@ -37,4 +37,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::resource('preference', PreferenceController::class);
 });
 
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
+
 require __DIR__.'/auth.php';

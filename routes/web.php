@@ -7,8 +7,9 @@ use App\Http\Controllers\Public\CategoryController as PublicCategoryController;
 use App\Http\Controllers\Public\UserController as PublicUserController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\PreferenceController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\PreferenceController as AdminPreferenceController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 Route::get('/', [PublicProductController::class, 'index'])->name('product.index');
 
@@ -35,8 +36,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     })->name('dashboard');
     Route::resource('category', AdminCategoryController::class);
     Route::resource('product', AdminProductController::class);
-    Route::resource('order', OrderController::class);
-    Route::resource('preference', PreferenceController::class);
+    Route::resource('order', AdminOrderController::class);
+    Route::resource('preference', AdminPreferenceController::class);
+    Route::resource('user', AdminUserController::class);
 });
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');

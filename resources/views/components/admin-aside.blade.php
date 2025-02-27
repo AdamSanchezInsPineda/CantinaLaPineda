@@ -26,8 +26,8 @@
                 <span>Categorias</span>
             </li>
         </a>
-        <a href="">
-            <li class="rounded-md p-1 border-b-2 text-xl flex gap-4 items-center">
+        <a href="{{ route('admin.user.index') }}">
+            <li class="rounded-md p-1 border-b-2 text-xl flex gap-4 items-center {{ request()->routeIs('admin.user.index') ? 'bg-gray-300' : 'hover:bg-gray-100' }}">
                 <x-icons.user class="size-8"/>
                 <span>Usuarios</span>
             </li>

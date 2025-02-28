@@ -4,12 +4,12 @@
         <!-- MOSTRAR UN PRODUCTO: PC Y TABLET, PEQUEÑAS DIFERENCIAS EN EL DISEÑO ENTRE ELLOS -->
         <div class="hidden md:flex w-[90%] items-center justify-center gap-10 mt-40">
             <div class="flex flex-col gap-2">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s" alt="" class="max-w-[100px] max-h-[100px] min-w-[100px] min-h-[100px] rounded-md">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s" alt="" class="max-w-[100px] max-h-[100px] min-w-[100px] min-h-[100px] rounded-md">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s" alt="" class="max-w-[100px] max-h-[100px] min-w-[100px] min-h-[100px] rounded-md">
+                @foreach ($otherImages as $image)
+                <img src="{{ $image ? asset('storage/' . $image) : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s"}}" alt="" class="max-w-[100px] max-h-[100px] min-w-[100px] min-h-[100px] rounded-md">
+                @endforeach
             </div>
             <div class="w-[500px] h-[500px] flex items-center justify-center">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s" alt="" class="lg:min-w-[500px] lg:min-h-[500px] md:min-h-[300px] md:min-w-[300px] rounded-md">
+                <img src="{{ $frontImage ? asset('storage/' . $frontImage) : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s"}}" alt="" class="lg:min-w-[500px] lg:min-h-[500px] md:min-h-[300px] md:min-w-[300px] rounded-md">
             </div>
             <div class="w-[500px] flex flex-col gap-2">
                 <b class="text-3xl">{{ $product->name }}</b>

@@ -17,7 +17,7 @@ class ProductController extends PublicController
 
     public function show(string $id)
     {
-        $product = Product::where('id', $id)->first();
+        $product = Product::find($id);
 
         $images = $product->images ?? [];
 

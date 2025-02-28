@@ -36,8 +36,9 @@ export default class Cart {
                 this.storage.setItem("products_version", last_updated_at);
                 return await this.fetchProducts();
             }
-
+65
             console.log("✅ Caché aún válida.");
+            this.storage.setItem(this.cacheTimeKey, Date.now().toString());
             return JSON.parse(this.storage.getItem(this.productsKey)) || [];
         } catch (error) {
             console.error("Error al verificar actualizaciones:", error);

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
-class ProfileController extends Controller
+class ProfileController extends PublicController
 {
     /**
      * Display the user's profile form.
@@ -47,6 +47,8 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        $request->session()->forget('cart');
 
         Auth::logout();
 

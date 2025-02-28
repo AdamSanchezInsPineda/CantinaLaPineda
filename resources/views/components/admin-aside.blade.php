@@ -34,7 +34,7 @@
         </a>
     </ul>
     <a href="{{ route('admin.preference.index') }}">
-        <div class="w-[93%] md:w-[270px] ml-5 rounded-md p-1 border-b-2 text-xl flex gap-4 items-center {{ request()->routeIs('admin.preference.index') ? 'bg-gray-300' : 'hover:bg-gray-100' }} mt-auto fixed bottom-10 left-0">
+        <div class="w-[93%] md:w-[270px] ml-5 rounded-md p-1 border-b-2 text-xl flex gap-4 items-center {{ request()->routeIs('admin.preference.index') ? 'bg-gray-300' : 'hover:bg-gray-100' }} mt-auto fixed left-0 bottom-10 lg:bottom-auto lg:pt-[800px]">
             <x-icons.options class="size-8"/>
             <span>Configuraciones</span>
         </div>

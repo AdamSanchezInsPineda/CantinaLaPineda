@@ -33,7 +33,9 @@
         <!-- CARRITO Y USUARIO: TABLET Y PC -->
         <div class="hidden md:flex flex-row justify-center items-center gap-10 mr-5 ml-36">
             <x-icons.cart class="size-8 mb-4"/>
-            <x-icons.profile class="size-8 mb-4"/>
+            <a href="{{ route('user.show', optional(Auth::user())->id ?? 0) }}"> <!-- envia el id del usuario, y si no existe envia un 0 para control de errores en en controlador -->
+                <x-icons.profile class="size-8 mb-4"/>
+            </a>                      
         </div>  
         
         <!-- MENU GENERAL: MOVIL -->
@@ -46,7 +48,7 @@
                     <x-icons.cart class="size-8 mb-4"/>
                     <span class="mt-1">Ver el carrito</span> 
                 </a>
-                <a href="" class="flex gap-3">
+                <a href="{{ route('user.show', optional(Auth::user())->id ?? 0) }}" class="flex gap-3">
                     <x-icons.profile class="size-8 mb-4"/>
                     <span class="mt-1">Tu perfil</span>
                 </a>

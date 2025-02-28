@@ -1,7 +1,8 @@
 <x-admin-layout>
     <div>
 
-        <header class="flex justify-center items-center pt-10 border-b-2 mb-12">
+        <header class="flex justify-center items-center gap-5 pt-10 border-b-2 mb-12">
+            <button id="toggle-btn" class="lg:hidden mb-10"><x-icons.hamburguer class="size-8"/></button>
             <b class="text-4xl mb-10">Pedidos:</b>
         </header>
 
@@ -9,7 +10,7 @@
             <div>
                 <b class="text-2xl ml-10">Pedidos pendientes:</b>
                 @foreach($pendingOrders as $order)
-                    <div class="border-b-2 flex items-center justify-between">
+                    <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                         <div class="flex items-center gap-4 ml-6">
                             <div>
                                 <b class="text-xl ml-5">{{ $order->total_price }} €</b>
@@ -17,14 +18,18 @@
                                 <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
                             </div>              
                         </div>
-                        <div class="flex">
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Aceptar pedido</button>
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Denegar pedido</button>
-                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                                </svg>
-                                <span>Mostrar información</span>
+                        <div class="flex items-center justify-center">
+                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700">
+                                <span class="hidden sm:block">Aceptar pedido</span>
+                                <x-icons.accept class="size-6 block sm:hidden"/>
+                            </button>
+                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700">
+                                <span class="hidden sm:block">Denegar pedido</span>
+                                <x-icons.cancel class="size-6 block sm:hidden"/>
+                            </button>
+                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
+                                <span class="hidden sm:block">Mostrar información</span>
+                                <x-icons.info class="size-6 block sm:hidden"/>
                             </a>
                         </div>
                     </div>
@@ -35,7 +40,7 @@
             <div>
                 <b class="text-2xl ml-10">Pedidos aceptados:</b>
                 @foreach($confirmedOrders as $order)
-                    <div class="border-b-2 flex items-center justify-between">
+                    <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                         <div class="flex items-center gap-4 ml-6">
                             <div>
                                 <b class="text-xl ml-5">{{ $order->total_price }} €</b>
@@ -44,12 +49,10 @@
                                 <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
                             </div>              
                         </div>
-                        <div class="flex">
-                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                                </svg>
-                                <span>Mostrar información</span>
+                        <div class="flex items-center justify-center">
+                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
+                                <x-icons.info class="size-6 block sm:hidden"/>
+                                <span class="block">Mostrar información</span>
                             </a>
                         </div>
                     </div>
@@ -60,7 +63,7 @@
             <div>
                 <b class="text-2xl ml-10">Pedidos degenados:</b>
                 @foreach($deniedOrders as $order)
-                    <div class="border-b-2 flex items-center justify-between">
+                    <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                         <div class="flex items-center gap-4 ml-6">
                             <div>
                                 <b class="text-xl ml-5">{{ $order->total_price }} €</b>
@@ -69,12 +72,10 @@
                                 <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
                             </div>              
                         </div>
-                        <div class="flex">
-                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                                </svg>
-                                <span>Mostrar información</span>
+                        <div class="flex items-center justify-center">
+                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
+                                <x-icons.info class="size-6 block sm:hidden"/>
+                                <span class="block">Mostrar información</span>
                             </a>
                         </div>
                     </div>
@@ -85,7 +86,7 @@
             <div>
                 <b class="text-2xl ml-10">Historial de pedidos:</b>
                 @foreach($allOrders as $order)
-                    <div class="border-b-2 flex items-center justify-between">
+                    <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                         <div class="flex items-center gap-4 ml-6">
                             <div>
                                 <b class="text-xl ml-5">{{ $order->total_price }} €</b>
@@ -93,12 +94,10 @@
                                 <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
                             </div>              
                         </div>
-                        <div class="flex">
-                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700 flex flex-row gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                                </svg>
-                                <span>Mostrar información</span>
+                        <div class="flex items-center justify-center">
+                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
+                                <x-icons.info class="size-6 block sm:hidden"/>
+                                <span class="block">Mostrar información</span>
                             </a>
                         </div>
                     </div>
@@ -108,4 +107,5 @@
 
         </main>
     </div>
+    <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
 </x-admin-layout>

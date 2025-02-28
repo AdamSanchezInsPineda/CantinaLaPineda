@@ -2,8 +2,16 @@
     <div>
 
         <header class="flex justify-between items-center pt-10 border-b-2 mb-12">
-            <b class="text-2xl ml-10">Categorias:</b>
-            <a href="category/create"><button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">+ Crear categoria</button></a>
+            <div class="ml-10 flex gap-5">
+                <button id="toggle-btn" class="lg:hidden"><x-icons.hamburguer class="size-8"/></button>
+                <b class="text-2xl">Categorias:</b>
+            </div>
+            <a href="category/create">
+                <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">
+                    <span class="hidden sm:block ">+ Crear categoria</span>
+                    <x-icons.create class="size-6 block sm:hidden"/>
+                </button>
+            </a>
         </header>
 
         <main class="flex flex-col gap-8">
@@ -28,4 +36,5 @@
 
         </main>
     </div>
+    <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
 </x-admin-layout>

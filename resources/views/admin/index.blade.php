@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <div class="flex p-48 justify-around">
+    <div class="flex items-center pt-20 md:pt-40 justify-center gap-20 flex-col md:flex-row">
         <a href="{{ route("admin.product.index") }}" class="flex flex-col justify-center text-center">
             <x-icons.product class="size-20"/>
             <p>Productos</p>

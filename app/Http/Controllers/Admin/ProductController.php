@@ -36,7 +36,7 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'category_id'  => 'required|exists:categories,id',
-            'code'         => 'required|string|max:50|unique:products,code,' . $id,
+            'code'         => 'required|string|max:50|unique:products,code',
             'name'         => 'required|string|max:255',
             'description'  => 'nullable|string|max:500',
             'price'        => 'required|numeric|min:0',
@@ -55,7 +55,7 @@ class ProductController extends Controller
             'featured' => $request->has('featured'),
             'images' => json_encode($imagePaths)
         ]));
-        return redirect()->route('product.index');
+        return redirect()->route('admin.product.index');
     }
 
     /**
@@ -120,6 +120,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->delete();
-        return redirect()->route('product.index');
+        return redirect()->route('admin.product.index');
     }
 }

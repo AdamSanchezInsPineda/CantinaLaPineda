@@ -13,7 +13,7 @@
                                 <p>{{ $product->name }}</p>
                                 <b>{{ $product->price }} €</b>
                             </div>
-                            <button class="bg-gray-800 text-white py-2 px-4 rounded-full mr-5 mb-3 h-[40px] hover:bg-gray-700 flex items-center justify-center gap-3">
+                            <button id="product-{{ $product->id }}" class="bg-gray-800 text-white py-2 px-4 rounded-full mr-5 mb-3 h-[40px] hover:bg-gray-700 flex items-center justify-center gap-3">
                                 <span>Añadir</span>
                                 <x-icons.shopping-bag class="size-6"/>
                             </button>

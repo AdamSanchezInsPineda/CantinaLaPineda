@@ -62,7 +62,7 @@ export default class Cart {
         return JSON.parse(this.storage.getItem(this.cartKey)) || [];
     }
 
-    addToCart(productId, quantity) {
+    addToCart(productId, quantity = 1) {
         let cart = this.getCart();
 
         let existingItem = cart.find(item => item.productId === productId);

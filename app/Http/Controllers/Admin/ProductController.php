@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view("admin.products.create_form", compact('categories'));
+        return view("admin.products.form", compact('categories'));
     }
 
     /**
@@ -73,7 +73,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::all();
-        return view("admin.products.edit_form", compact('product', 'categories'));
+        return view("admin.products.form", compact('product', 'categories'));
     }
 
     /**

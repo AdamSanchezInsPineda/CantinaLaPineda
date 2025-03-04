@@ -21,10 +21,6 @@ Route::get('/category/{category_name}', [PublicCategoryController::class, 'show'
 Route::get('/products/version', [PublicProductController::class, 'getProductsVersion']);
 Route::get('/products/all', [PublicProductController::class, 'getProducts']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

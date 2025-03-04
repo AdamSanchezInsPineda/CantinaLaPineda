@@ -1,111 +1,201 @@
 <x-admin-layout>
-    <div>
-
-        <header class="flex justify-center items-center gap-5 pt-10 border-b-2 mb-12">
-            <button id="toggle-btn" class="lg:hidden mb-10"><x-icons.hamburguer class="size-8"/></button>
-            <b class="text-4xl mb-10">Pedidos:</b>
-        </header>
-
-        <main class="flex flex-col gap-20">
-            <div>
-                <b class="text-2xl ml-10">Pedidos pendientes:</b>
-                @foreach($pendingOrders as $order)
-                    <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
-                        <div class="flex items-center gap-4 ml-6">
-                            <div>
-                                <b class="text-xl ml-5">{{ $order->total_price }} €</b>
-                                <p class="text-lg ml-5">Pedido en {{ $order->order_date }}</p>
-                                <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
-                            </div>              
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700">
-                                <span class="hidden sm:block">Aceptar pedido</span>
-                                <x-icons.accept class="size-6 block sm:hidden"/>
-                            </button>
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700">
-                                <span class="hidden sm:block">Denegar pedido</span>
-                                <x-icons.cancel class="size-6 block sm:hidden"/>
-                            </button>
-                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
-                                <span class="hidden sm:block">Mostrar información</span>
-                                <x-icons.info class="size-6 block sm:hidden"/>
-                            </a>
-                        </div>
-                    </div>
-                    
-                @endforeach
+    <x-slot:title>Orders</x-slot>
+    
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <h1 class="text-lg font-semibold md:text-2xl">Orders</h1>
+        </div>
+        
+        <div x-data="{ activeTab: 'pending' }" class="flex flex-col gap-6 px-4 sm:px-0">
+            {{-- Tabs --}}
+            <div class="border-b">
+                <nav class="flex gap-4 overflow-x-auto pb-2 -mb-2" aria-label="Tabs">
+                    <button 
+                        @click="activeTab = 'pending'" 
+                        :class="{ 'border-primary text-primary': activeTab === 'pending' }"
+                        class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-muted-foreground hover:text-foreground"
+                    >
+                        Pending Orders
+                    </button>
+                    <button 
+                        @click="activeTab = 'accepted'" 
+                        :class="{ 'border-primary text-primary': activeTab === 'accepted' }"
+                        class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-muted-foreground hover:text-foreground"
+                    >
+                        Accepted Orders
+                    </button>
+                    <button 
+                        @click="activeTab = 'canceled'" 
+                        :class="{ 'border-primary text-primary': activeTab === 'canceled' }"
+                        class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-muted-foreground hover:text-foreground"
+                    >
+                        Canceled Orders
+                    </button>
+                    <button 
+                        @click="activeTab = 'history'" 
+                        :class="{ 'border-primary text-primary': activeTab === 'history' }"
+                        class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-muted-foreground hover:text-foreground"
+                    >
+                        Order History
+                    </button>
+                </nav>
             </div>
 
+            {{-- Paneles --}}
             <div>
-                <b class="text-2xl ml-10">Pedidos aceptados:</b>
-                @foreach($confirmedOrders as $order)
-                    <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
-                        <div class="flex items-center gap-4 ml-6">
-                            <div>
-                                <b class="text-xl ml-5">{{ $order->total_price }} €</b>
-                                <p class="text-lg ml-5">Pedido en {{ $order->order_date }}</p>
-                                <p class="text-lg ml-5">Aceptado en {{ $order->confirmation_date }}</p>
-                                <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
-                            </div>              
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
-                                <x-icons.info class="size-6 block sm:hidden"/>
-                                <span class="block">Mostrar información</span>
-                            </a>
-                        </div>
+                <!-- Pending Orders -->
+                <div x-show="activeTab === 'pending'" class="rounded-lg border">
+                    <div class="relative w-full overflow-auto">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead class="[&_tr]:border-b">
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Order ID</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Customer</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Date</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Total</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Status</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground w-[100px]"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="[&_tr:last-child]:border-0">
+                                @foreach($pendingOrders as $order)
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td class="p-4 align-middle font-medium">#{{ $order->id }}</td>
+                                    <td class="p-4 align-middle">{{ $order->customer_name }}</td>
+                                    <td class="p-4 align-middle">{{ $order->created_at->format('M d, Y') }}</td>
+                                    <td class="p-4 align-middle">${{ number_format($order->total, 2) }}</td>
+                                    <td class="p-4 align-middle">
+                                        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="p-4 align-middle">
+                                        <div class="flex gap-2">
+                                            <form method="POST">
+                                                @csrf
+                                                <button type="submit" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-green-500 text-white hover:bg-green-600 h-8 w-8">
+                                                    <i data-lucide="check" class="h-4 w-4"></i>
+                                                </button>
+                                            </form>
+                                            <form method="POST">
+                                                @csrf
+                                                <button type="submit" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-500 text-white hover:bg-red-600 h-8 w-8">
+                                                    <i data-lucide="x" class="h-4 w-4"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                    
-                @endforeach
-            </div>
+                </div>
 
-            <div>
-                <b class="text-2xl ml-10">Pedidos degenados:</b>
-                @foreach($deniedOrders as $order)
-                    <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
-                        <div class="flex items-center gap-4 ml-6">
-                            <div>
-                                <b class="text-xl ml-5">{{ $order->total_price }} €</b>
-                                <p class="text-lg ml-5">Pedido en {{ $order->order_date }}</p>
-                                <p class="text-lg ml-5">Denegado en {{ $order->confirmation_date }}</p>
-                                <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
-                            </div>              
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
-                                <x-icons.info class="size-6 block sm:hidden"/>
-                                <span class="block">Mostrar información</span>
-                            </a>
-                        </div>
+                <!-- Accepted Orders -->
+                <div x-show="activeTab === 'accepted'" class="rounded-lg border">
+                    <div class="relative w-full overflow-auto">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead class="[&_tr]:border-b">
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Order ID</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Customer</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Date</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Total</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="[&_tr:last-child]:border-0">
+                                @foreach($acceptedOrders as $order)
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td class="p-4 align-middle font-medium">#{{ $order->id }}</td>
+                                    <td class="p-4 align-middle">{{ $order->customer_name }}</td>
+                                    <td class="p-4 align-middle">{{ $order->created_at->format('M d, Y') }}</td>
+                                    <td class="p-4 align-middle">${{ number_format($order->total, 2) }}</td>
+                                    <td class="p-4 align-middle">
+                                        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
+                                            Accepted
+                                        </span>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                    
-                @endforeach
-            </div>
+                </div>
 
-            <div>
-                <b class="text-2xl ml-10">Historial de pedidos:</b>
-                @foreach($allOrders as $order)
-                    <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
-                        <div class="flex items-center gap-4 ml-6">
-                            <div>
-                                <b class="text-xl ml-5">{{ $order->total_price }} €</b>
-                                <p class="text-lg ml-5">Pedido en {{ $order->order_date }}</p>
-                                <p class="text-lg ml-5">Pedido por {{ $order->user->name }} {{ $order->user->surname }}</p>
-                            </div>              
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
-                                <x-icons.info class="size-6 block sm:hidden"/>
-                                <span class="block">Mostrar información</span>
-                            </a>
-                        </div>
+                <!-- Canceled Orders -->
+                <div x-show="activeTab === 'canceled'" class="rounded-lg border">
+                    <div class="relative w-full overflow-auto">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead class="[&_tr]:border-b">
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Order ID</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Customer</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Date</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Total</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="[&_tr:last-child]:border-0">
+                                @foreach($canceledOrders as $order)
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td class="p-4 align-middle font-medium">#{{ $order->id }}</td>
+                                    <td class="p-4 align-middle">{{ $order->customer_name }}</td>
+                                    <td class="p-4 align-middle">{{ $order->created_at->format('M d, Y') }}</td>
+                                    <td class="p-4 align-middle">${{ number_format($order->total, 2) }}</td>
+                                    <td class="p-4 align-middle">
+                                        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-100 text-red-800">
+                                            Canceled
+                                        </span>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                    
-                @endforeach
-            </div>
+                </div>
 
-        </main>
+                <!-- Order History -->
+                <div x-show="activeTab === 'history'" class="rounded-lg border">
+                    <div class="relative w-full overflow-auto">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead class="[&_tr]:border-b">
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Order ID</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Customer</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Date</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Total</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="[&_tr:last-child]:border-0">
+                                @foreach($orderHistory as $order)
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td class="p-4 align-middle font-medium">#{{ $order->id }}</td>
+                                    <td class="p-4 align-middle">{{ $order->customer_name }}</td>
+                                    <td class="p-4 align-middle">{{ $order->created_at->format('M d, Y') }}</td>
+                                    <td class="p-4 align-middle">${{ number_format($order->total, 2) }}</td>
+                                    <td class="p-4 align-middle">
+                                        <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium 
+                                            @if($order->status === 'ordered')
+                                                bg-blue-100 text-blue-800
+                                            @elseif($order->status === 'denied')
+                                                bg-red-100 text-red-800
+                                            @elseif($order->status === 'confirmed')
+                                                bg-green-100 text-green-800
+                                            @endif
+                                        ">
+                                            {{ ucfirst($order->status) }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
 </x-admin-layout>

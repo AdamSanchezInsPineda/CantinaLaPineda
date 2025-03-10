@@ -1,6 +1,6 @@
-<header class="fixed left-0 top-0 w-full bg-white h-[75px]">
+<header class="fixed left-0 top-0 w-full bg-white ">
     <div class="flex flex-row justify-between mt-4">
-        <!-- BARRA DE BUSQUEDA: GENERAL -->
+        {{-- BARRA DE BUSQUEDA: GENERAL --}}
         <div class=" ml-5 flex flex-row justify-center items-center gap-10">
             <div class="flex flex-row items-center justify-center gap-3 mb-3">         
                 <input type="text" name="name" id="search-input" placeholder="Busca tu producto" class="p-2 rounded-full">
@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <!-- LISTADO DE CATEGORIAS: PC -->
+        {{-- LISTADO DE CATEGORIAS: PC --}}
         <div class="hidden lg:flex flex-row justify-center items-center gap-10 mb-4">
             <a href="{{ route('product.index') }}" class="text-xl"><b>Destacados</b></a>
             @foreach($categories as $category)
@@ -16,7 +16,7 @@
             @endforeach        
         </div>
 
-        <!-- DESPLEGABLE DE CATEGORIAS: TABLET -->
+        {{-- DESPLEGABLE DE CATEGORIAS: TABLET --}}
         <button id="toggle-btn" class="hidden md:flex lg:hidden items-center justify-center gap-2 mb-4">
             <span class="font-bold text-xl">Categorias</span>
             <x-icons.arrow-down class="size-6"/>
@@ -30,15 +30,17 @@
             </div>
         </div>
 
-        <!-- CARRITO Y USUARIO: TABLET Y PC -->
+        {{-- CARRITO Y USUARIO: TABLET Y PC --}}
         <div class="hidden md:flex flex-row justify-center items-center gap-10 mr-5 ml-36">
-            <x-icons.cart class="size-8 mb-4"/>
-            <a href="{{ route('user.show', optional(Auth::user())->id ?? 0) }}"> <!-- envia el id del usuario, y si no existe envia un 0 para control de errores en en controlador -->
+            <button id="cart-button">
+                <x-icons.cart class="size-8 mb-4"/>
+            </button>
+            <a href="{{ route('user.show', optional(Auth::user())->id ?? 0) }}"> {{-- envia el id del usuario, y si no existe envia un 0 para control de errores en en controlador --}}
                 <x-icons.profile class="size-8 mb-4"/>
             </a>                      
-        </div>  
+        </div>
         
-        <!-- MENU GENERAL: MOVIL -->
+        {{-- MENU GENERAL: MOVIL --}}
         <button id="toggle-btn-2" class="md:hidden mb-4 mr-5">
             <x-icons.hamburguer class="size-8"/>
         </button>
@@ -58,6 +60,10 @@
                 @endforeach     
             </div>
         </div>
+    </div>
+    <div id="cart" class="p-10">
+        <h1 class="text-3xl font-bold">Carrito:</h1>
+        <div id="cart-content"></div>
     </div>
 </header>
 <script src="{{ mix('resources/js/displaycategoriestablet.js') }}" defer></script>

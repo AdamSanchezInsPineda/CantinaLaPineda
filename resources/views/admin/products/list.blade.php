@@ -19,7 +19,7 @@
             @foreach($products as $product)
                 <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                     <div class="flex items-center gap-4 ml-6">
-                        @if ($product->images && !empty(json_decode($product->images)))
+                        @if ($product->images && !empty($product->images))
                             <img src="{{ asset('storage/' . $product->images[0]) }}" width="150">
                         @else
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-32">

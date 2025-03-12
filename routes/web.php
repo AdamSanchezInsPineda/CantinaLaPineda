@@ -44,6 +44,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::resource('preference', AdminPreferenceController::class);
     Route::resource('user', AdminUserController::class);
     Route::get('/api/monthly-sales', [AdminOrderController::class, 'getMonthlySales']);
+    Route::get('/category/parameters/{id}', [AdminCategoryController::class, 'listParameters'])->name('category.parameters');
 });
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');

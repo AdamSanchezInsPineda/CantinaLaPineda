@@ -82,4 +82,9 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('admin.category.index');
     }
+    
+    public function listParameters(string $id) {
+        $category = Category::with('category_parameters')->findOrFail($id);
+        return view("admin.categories.list_parameters", compact('category'));
+    }
 }

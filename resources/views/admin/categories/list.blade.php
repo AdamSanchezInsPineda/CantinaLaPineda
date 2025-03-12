@@ -17,13 +17,13 @@
         <main class="flex flex-col gap-8">
 
             @foreach($categories as $category)
-                <div class="border-b-2 flex items-center justify-between">
+                <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                     <div class="flex items-center gap-4 ml-6">
                         <div>
                             <b class="text-xl ml-5">{{ $category->name }}</b>
                         </div>              
                     </div>
-                    <div class="flex">
+                    <div class="flex items-center justify-center ml-10">
                         <a href="{{ route('admin.category.parameters', $category->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Configurar</a>
                         <a href="{{ route('admin.category.edit', $category->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">Editar</a>
                         <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST">

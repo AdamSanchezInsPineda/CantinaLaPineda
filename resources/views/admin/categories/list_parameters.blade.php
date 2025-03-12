@@ -6,7 +6,7 @@
                 <button id="toggle-btn" class="lg:hidden"><x-icons.hamburguer class="size-8"/></button>
                 <b class="text-2xl">Configura tu categoria:</b>
             </div>
-            <a href="category/create">
+            <a href="{{ route('admin.category.parameters.create', $category->id) }}">
                 <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">
                     <span class="hidden sm:block ">+ Crear nuevo parametro de configuracion</span>
                     <x-icons.create class="size-6 block sm:hidden"/>

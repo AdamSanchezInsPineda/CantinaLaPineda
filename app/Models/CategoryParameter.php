@@ -11,6 +11,7 @@ class CategoryParameter extends Model
 {
     //
     use HasFactory;
+    protected $fillable = ['description', 'category_id'];
     public function category(): BelongsTo {
         return $this->belongsTo(Category::class);
     }

@@ -14,7 +14,6 @@ class CategoryParameterSeeder extends Seeder
     public function run(): void
     {
         CategoryParameter::factory()->create([
-            'key' => "queso",
             'description' => "Añadir queso",
             'category_id' => 1
         ]);

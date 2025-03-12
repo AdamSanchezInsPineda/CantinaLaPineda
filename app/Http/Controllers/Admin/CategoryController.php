@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\CategoryParameter;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -86,5 +87,19 @@ class CategoryController extends Controller
     public function listParameters(string $id) {
         $category = Category::with('category_parameters')->findOrFail($id);
         return view("admin.categories.list_parameters", compact('category'));
+    }
+
+    public function createParameters(string $id)
+    {
+        return view("admin.categories.create_parameter", compact('id'));
+    }
+
+    public function storeParameters(Request $request)
+    {
+        CategoryParameter::create([
+            'description' => request('description'),
+            'category_id' => request('category_id')
+        ]);
+        return redirect()->route('admin.category.parameters', request('category_id'));
     }
 }

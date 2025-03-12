@@ -24,7 +24,7 @@
     <div class="mt-10 flex flex-col items-center justify-center">
         <p class="text-3xl">Ventas mensuales 2025:</p>
         <canvas id="salesChart" width="800" height="600"></canvas>
-        <p class="text-3xl">Productos mas vendidos:</p>
+        <p class="text-3xl mt-10">Productos mas vendidos:</p>
         <canvas id="mostSoldChart" width="800" height="600"></canvas>
 
         <script src="{{ mix('resources/js/monthlysalesgraph.js') }}" defer></script>

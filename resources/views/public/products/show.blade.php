@@ -1,7 +1,7 @@
 <x-public-layout>
 
-    <main class="flex items-center justify-center">
-        <!-- MOSTRAR UN PRODUCTO: PC Y TABLET, PEQUEÑAS DIFERENCIAS EN EL DISEÑO ENTRE ELLOS -->
+    <div class="flex items-center justify-center">
+        {{-- MOSTRAR UN PRODUCTO: PC Y TABLET, PEQUEÑAS DIFERENCIAS EN EL DISEÑO ENTRE ELLOS --}}
         <div class="hidden md:flex w-[90%] items-center justify-center gap-10 mt-40">
             <div class="flex flex-col gap-2">
                 @foreach ($otherImages as $image)
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <!-- MOSTRAR UN PRODUCTO: MOVIL -->
+        {{-- MOSTRAR UN PRODUCTO: MOVIL --}}
         <div class="md:hidden mt-40 flex flex-col gap-5">
             <div class="flex gap-2">
                 @foreach ($otherImages as $image)
@@ -42,6 +42,6 @@
                 </a>
             </div>
         </div>
-    </main>
+    </div>
     
 </x-public-layout>

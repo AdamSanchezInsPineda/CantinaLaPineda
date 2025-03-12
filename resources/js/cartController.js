@@ -1,30 +1,29 @@
 import Cart from './Cart';
 
-const cartContainer = document.getElementById("cart");
-
+const cartContainer = document.getElementById("cart-container");
+const cartDom = document.getElementById("cart");
 const cartContent = document.getElementById("cart-content");
-
 const cartButton = document.getElementById("cart-button");
-
 const mobileCartButton = document.getElementById("cart-button-mb");
 
 let cart = new Cart();
 
-if (cartButton){
-    cartButton.addEventListener("click", () => {
-        cartContainer.classList.contains("hidden") ? cartContainer.classList.remove("hidden") : cartContainer.classList.add("hidden");
-    });
-}
+const toggleCart = () => {
+    cartContainer.classList.toggle("opacity-0");
+    if (cartDom.classList.contains("-translate-y-full")) {
+        cartDom.classList.remove("-translate-y-full", "opacity-0", "pointer-events-none");
+        cartDom.classList.add("translate-y-0", "opacity-100");
+    } else {
+        cartDom.classList.add("-translate-y-full", "opacity-0", "pointer-events-none");
+        cartDom.classList.remove("translate-y-0", "opacity-100");
+    }
+};
 
-if (mobileCartButton){
-    mobileCartButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const mobileMenu = document.getElementById("mobile-menu");
-        mobileMenu.classList.add("hidden");
-        cartContainer.classList.contains("hidden") ? cartContainer.classList.remove("hidden") : cartContainer.classList.add("hidden");
-    });
-}
+const closeCart = () => {
+    cartContainer.classList.add("opacity-0");
+    cartDom.classList.add("-translate-y-full", "opacity-0", "pointer-events-none");
+    cartDom.classList.remove("translate-y-0", "opacity-100");
+};
 
 const appendCart = () => {
     if (cartContent){
@@ -60,11 +59,34 @@ cart.getProducts().then(data => {
                 e.stopPropagation();
                 cart.addToCart(product.id);
                 appendCart();
+                toggleCart();
                 return false;
             });
         }
     });
-})
+});
+
+if (cartButton){
+    cartButton.addEventListener("click", () => {
+        toggleCart();
+    });
+}
+
+if (mobileCartButton){
+    mobileCartButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const mobileMenu = document.getElementById("mobile-menu");
+        mobileMenu.classList.add("hidden");
+        toggleCart();
+    });
+}
+
+/*document.addEventListener("click", (event) => {
+    if (!cartDom.contains(event.target) && !cartContainer.classList.contains("opacity-0")) {
+        closeCart();
+    }
+});*/
 
 if (cartContainer){
     appendCart();

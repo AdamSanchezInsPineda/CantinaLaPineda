@@ -1,6 +1,6 @@
 <x-public-layout>
 
-    <main class="flex items-center justify-center">
+    <div class="flex items-center justify-center">
         <div id="products-container" class="w-[90%] flex flex-wrap items-center justify-center gap-10 mt-24">
             @foreach($products as $product)
                 <a href="{{ route('product.show', $product->id) }}" data-product-name="{{ $product->name }}">
@@ -22,6 +22,6 @@
                 </a>     
             @endforeach  
         </div>        
-    </main>
+    </div>
     <script src="{{ mix('resources/js/productfilter.js') }}" defer></script>
 </x-public-layout>

@@ -37,7 +37,7 @@
             </button>
             <a href="{{ route('user.show', optional(Auth::user())->id ?? 0) }}"> {{-- envia el id del usuario, y si no existe envia un 0 para control de errores en en controlador --}}
                 <x-icons.profile class="size-8 mb-4"/>
-            </a>                      
+            </a>
         </div>
         
         {{-- MENU GENERAL: MOVIL --}}
@@ -46,10 +46,10 @@
         </button>
         <div id="mobile-menu" class="hidden fixed top-10 left-1/2 transform -translate-x-1/2 bg-gray-200 p-4 mt-10 rounded-md z-50 w-full">
             <div class="flex flex-col gap-8">
-                <a href="" class="flex gap-3">
+                <button id="cart-button-mb" href="" class="flex gap-3">
                     <x-icons.cart class="size-8 mb-4"/>
                     <span class="mt-1">Ver el carrito</span> 
-                </a>
+                </button>
                 <a href="{{ route('user.show', optional(Auth::user())->id ?? 0) }}" class="flex gap-3">
                     <x-icons.profile class="size-8 mb-4"/>
                     <span class="mt-1">Tu perfil</span>
@@ -61,9 +61,11 @@
             </div>
         </div>
     </div>
-    <div id="cart" class="p-10">
-        <h1 class="text-3xl font-bold">Carrito:</h1>
-        <div id="cart-content"></div>
+    <div id="cart" class="hidden w-full h-screen absolute bg-black bg-opacity-50">
+        <div class="bg-white p-10">
+            <h1 class="text-3xl font-bold">Carrito:</h1>
+            <div id="cart-content"></div>
+        </div>
     </div>
 </header>
 <script src="{{ mix('resources/js/displaycategoriestablet.js') }}" defer></script>

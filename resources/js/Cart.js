@@ -36,7 +36,7 @@ export default class Cart {
                 this.storage.setItem("products_version", last_updated_at);
                 return await this.fetchProducts();
             }
-65
+            
             console.log("✅ Caché aún válida.");
             this.storage.setItem(this.cacheTimeKey, Date.now().toString());
             return JSON.parse(this.storage.getItem(this.productsKey)) || [];
@@ -84,7 +84,8 @@ export default class Cart {
         console.log("Producto eliminado. Carrito actualizado:", cart);
     }
 
-    async checkout(token) {
+    async checkout() {
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         let cart = this.getCart();
 
         if (cart.length === 0) {
@@ -93,11 +94,11 @@ export default class Cart {
         }
 
         try {
-            const response = await fetch("/checkout", {
+            const response = await fetch("/checkout/new", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    'X-CSRF-TOKEN': token
                 },
                 body: JSON.stringify({ cart })
             });

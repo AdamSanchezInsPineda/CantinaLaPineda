@@ -1,4 +1,4 @@
-<header class="fixed left-0 top-0 w-full bg-white z-10">
+<header class="w-full bg-white z-10">
     <div class="flex flex-row justify-between mt-4">
         {{-- BARRA DE BUSQUEDA: GENERAL --}}
         <div class=" ml-5 flex flex-row justify-center items-center gap-10">
@@ -62,7 +62,7 @@
         </div>
     </div>
 </header>
-<div id="cart-container" class="w-full h-screen fixed left-0 top-16 bg-black bg-opacity-50 opacity-0 z-0 pointer-events-none">
+<div id="cart-container" class="w-full h-screen fixed left-0 top-16 bg-black bg-opacity-50 hidden z-0">
     <div id="cart" class="bg-white p-10 transform -translate-y-full transition-transform duration-300 opacity-0 pointer-events-none">
         <h1 class="text-3xl font-bold">Carrito:</h1>
         <div id="cart-content"></div>

@@ -15,10 +15,10 @@
                 <b class="text-3xl">{{ $product->name }}</b>
                 <p class="text-xl">{{ $product->price }} €</p>
                 <p class="break-words max-w-[500px] whitespace-pre-wrap text-sm text-gray-700">{{ $product->description }}</p>
-                <a href="" class="mt-10 bg-gray-800 text-white py-2 px-4 rounded-full mr-5 mb-3 h-[40px] w-[200px] hover:bg-gray-700 flex items-center justify-center gap-3">
+                <button id="product-{{$product->id}}" class="mt-10 bg-gray-800 text-white py-2 px-4 rounded-full mr-5 mb-3 h-[40px] w-[200px] hover:bg-gray-700 flex items-center justify-center gap-3">
                     <span>Añadir al carrito</span>
                     <x-icons.shopping-bag class="size-6"/>
-                </a>
+                </button>
             </div>
         </div>
 
@@ -36,10 +36,10 @@
                 <b class="text-3xl">{{ $product->name }}</b>
                 <p class="text-xl">{{ $product->price }} €</p>
                 <p class="break-words max-w-[500px] whitespace-pre-wrap text-sm text-gray-700">{{ $product->description }}</p>
-                <a href="" class="mt-10 mb-20 bg-gray-800 text-white py-2 px-4 rounded-full h-[40px] w-[200px] hover:bg-gray-700 flex items-center justify-center gap-3">
+                <button id="product-{{$product->id}}" class="mt-10 mb-20 bg-gray-800 text-white py-2 px-4 rounded-full h-[40px] w-[200px] hover:bg-gray-700 flex items-center justify-center gap-3">
                     <span>Añadir al carrito</span>
                     <x-icons.shopping-bag class="size-6"/>
-                </a>
+                </button>
             </div>
         </div>
     </div>

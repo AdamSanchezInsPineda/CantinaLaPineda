@@ -9,7 +9,7 @@ const mobileCartButton = document.getElementById("cart-button-mb");
 let cart = new Cart();
 
 const toggleCart = () => {
-    cartContainer.classList.toggle("opacity-0");
+    cartContainer.classList.toggle("hidden");
     if (cartDom.classList.contains("-translate-y-full")) {
         cartDom.classList.remove("-translate-y-full", "opacity-0", "pointer-events-none");
         cartDom.classList.add("translate-y-0", "opacity-100");
@@ -20,7 +20,7 @@ const toggleCart = () => {
 };
 
 const closeCart = () => {
-    cartContainer.classList.add("opacity-0");
+    cartContainer.classList.add("hidden");
     cartDom.classList.add("-translate-y-full", "opacity-0", "pointer-events-none");
     cartDom.classList.remove("translate-y-0", "opacity-100");
 };
@@ -35,16 +35,17 @@ const appendCart = () => {
                 console.log(product)
                 let foundItem = cartItems.find(item => item.productId === product.id);
                 if (foundItem) {
-                    cartContent.innerHTML += `<div class="flex justify-between items-center">
+                    cartContent.innerHTML +=    `<div class="flex justify-between items-center">
                                                     <img class="w-20" src="${product.images ? "/storage/" + product.images[0] : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy7S0JruZGX6NJHRNy3XP60n62PnJWIR-4Iw&s"}">
                                                     <div class="flex flex-col justify-between gap-5">
                                                         <p>${product.name}</p>
-                                                        <p>Precio: ${product.price}€</p>
+                                                        <p>Precio: ${(product.price * foundItem.quantity).toFixed(2)}€</p>
                                                     </div>
                                                     <p>Cantidad: ${foundItem.quantity}</p>
                                                 </div>`;
                 }
             });
+            cartContent.innerHTML +=    `<div class="flex justify-center"><a href="/checkout">Pagar</a></div>`
         });
     }
 }
@@ -56,7 +57,6 @@ cart.getProducts().then(data => {
         if (button) {
             button.addEventListener("click", (e) => {
                 e.preventDefault();
-                e.stopPropagation();
                 cart.addToCart(product.id);
                 appendCart();
                 toggleCart();
@@ -75,7 +75,6 @@ if (cartButton){
 if (mobileCartButton){
     mobileCartButton.addEventListener("click", (e) => {
         e.preventDefault();
-        e.stopPropagation();
         const mobileMenu = document.getElementById("mobile-menu");
         mobileMenu.classList.add("hidden");
         toggleCart();
@@ -91,3 +90,5 @@ if (mobileCartButton){
 if (cartContainer){
     appendCart();
 }
+
+console.log(cart.getCart());

@@ -16,6 +16,7 @@ Route::get('/', [PublicProductController::class, 'index'])->name('product.index'
 
 Route::resource('product', PublicProductController::class)->only(['show']);
 Route::resource('user', PublicUserController::class)->only(['show']);
+Route::resource('order', PublicOrderController::class)->only(['show']);
 
 Route::get('/category/{category_name}', [PublicCategoryController::class, 'show'])->name('category.show');
 
@@ -39,6 +40,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::resource('order', AdminOrderController::class);
     Route::resource('preference', AdminPreferenceController::class);
     Route::resource('user', AdminUserController::class);
+    Route::get('/api/monthly-sales', [AdminOrderController::class, 'getMonthlySales']);
+    Route::get('/category/parameters/{id}', [AdminCategoryController::class, 'listParameters'])->name('category.parameters');
+    Route::get('/category/parameters/{id}/create', [AdminCategoryController::class, 'createParameters'])->name('category.parameters.create');
+    Route::post('/category/parameters/{id}/store', [AdminCategoryController::class, 'storeParameters'])->name('category.parameters.store');
 });
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');

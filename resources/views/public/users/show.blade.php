@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-public-layout>
 
     <main class="pt-20 flex flex-col gap-3 items-center">
         <h1 class="text-3xl"><b>Bienvenido/a, {{ $user->name }} {{ $user->surname }}</b></h1>
@@ -31,6 +31,13 @@
                                     <div>Denegado</div>
                                 @endif
                             </div>
+                            <div>
+                                <a href="/order/{{ $order->id }}">
+                                    <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">
+                                        <span class="">Ver factura</span>
+                                    </button>
+                                </a>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -38,4 +45,4 @@
         </div>
     </main>
     <script src="{{ mix('resources/js/productfilter.js') }}" defer></script>
-</x-app-layout>
+</x-public-layout>

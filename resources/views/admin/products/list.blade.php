@@ -16,6 +16,8 @@
 
         <main class="flex flex-col gap-8">
 
+            <h1 class="hidden lg:block text-4xl text-red-500 font-extrabold">ACUERDATE DE QUE LOS PRODUCTOS DESACTIVADOS TODAVIA SE MUESTRAN EN LA TIENDA CAMBIALO CAMBIALO CAMBIALO</h1>
+
             @foreach($products as $product)
                 <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                     <div class="flex items-center gap-4 ml-6">
@@ -37,8 +39,10 @@
                         <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('¿Seguro que quieres borrar este producto?')" class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 h-[40px] hover:bg-gray-700">Borrar</button>
-                        </form>
+                            <button type="submit" onclick="return confirm('¿Seguro que quieres cambiar el estado de este producto?')" class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 h-[40px] hover:bg-gray-700">
+                                {{ $product->active ? 'Desactivar' : 'Activar' }}
+                            </button>
+                        </form>                        
                     </div>
                 </div>
             @endforeach

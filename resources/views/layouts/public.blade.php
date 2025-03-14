@@ -7,11 +7,11 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
+        {{-- Fonts --}}
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
+        {{-- Scripts --}}
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
@@ -21,5 +21,6 @@
                 {{ $slot }}
             </main>
         </div>
+        {{--<script src="//code.tidio.co/n2ye3qf40hxytwymy0t73drnv6vn68vh.js" async></script>--}}
     </body>
 </html>

@@ -2,10 +2,18 @@
     <div class="flex flex-row justify-between mt-4">
         {{-- BARRA DE BUSQUEDA: GENERAL --}}
         <div class=" ml-5 flex flex-row justify-center items-center gap-10">
+            @if (request()->is('/') || strpos(request()->path(), 'category') !== false) <!-- si la url esta en / o contiene /category -->
             <div class="flex flex-row items-center justify-center gap-3 mb-3">         
                 <input type="text" name="name" id="search-input" placeholder="Busca tu producto" class="p-2 rounded-full">
                 <x-icons.search class="size-6 transform translate-x-[-50px]"/>
             </div>
+            @else
+            <div class="flex flex-row items-center justify-center gap-3 mb-3">
+                <a href="/" class="border-b-2 border-gray-500 mr-[155px] p-2">
+                    volver al inicio
+                </a>
+            </div>
+            @endif
         </div>
 
         {{-- LISTADO DE CATEGORIAS: PC --}}

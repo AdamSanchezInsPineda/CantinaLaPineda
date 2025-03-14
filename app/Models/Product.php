@@ -23,6 +23,9 @@ class Product extends Model
         return $this->hasMany(Image::class);
     }
     public function orders(): BelongsToMany {
-        return $this->belongsToMany(Order::class, 'order_products')->withPivot('quantity');;
+        return $this->belongsToMany(Order::class, 'order_products')->withPivot('quantity');
+    }
+    public function category_parameters(): BelongsToMany {
+        return $this->belongsToMany(CategoryParameter::class, 'product_parameters')->withPivot('value');
     }
 }

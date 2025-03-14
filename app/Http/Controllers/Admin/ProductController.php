@@ -119,7 +119,8 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-        $product->delete();
+        $product->active = !$product->active; // cambia el estado al contrario al actual
+        $product->save();
         return redirect()->route('admin.product.index');
-    }
+    }    
 }

@@ -3,11 +3,11 @@
         <button id="hide-btn" class="mt-10 ml-6 lg:hidden"><x-icons.cancel class="size-8"/></button>
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button type="submit" class="mt-10 bg-gray-800 text-white py-2 px-4 rounded-full h-[40px] hover:bg-gray-600">Cerrar sesión</button>
+            <button type="submit" class="lg:fixed mt-10 bg-gray-800 text-white py-2 px-4 rounded-full h-[40px] hover:bg-gray-600">Cerrar sesión</button>
         </form>
     </div>
     <ul class="flex flex-col gap-12 fixed w-[93%] md:w-[270px]">
-        <div class="mb-40"></div> <!-- esto no lo ha visto nadie... -->
+        <div class="mb-40"></div>
         <a href="{{ route('admin.product.index') }}">
             <li class="rounded-md p-1 border-b-2 text-xl flex gap-4 items-center {{ request()->routeIs('admin.product.index') ? 'bg-gray-300' : 'hover:bg-gray-100' }}">
                 <x-icons.product class="size-8"/>

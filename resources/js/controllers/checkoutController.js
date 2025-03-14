@@ -17,7 +17,7 @@ function getCartProducts(){
                 console.log(product)
                 let foundItem = cartItems.find(item => item.productId === product.id);
                 if (foundItem) {
-                    total += Number(product.price);
+                    total += Number(product.price * foundItem.quantity);
                     checkoutContent.innerHTML +=    `<li class="flex flex-wrap gap-4 text-sm">${product.name}<span class="ml-auto font-bold">${(product.price * foundItem.quantity).toFixed(2)}€</span></li>`;
                 }
             });

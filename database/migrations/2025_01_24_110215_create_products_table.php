@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->float('price');
             $table->boolean('featured')->default(false);
+            $table->boolean('active')->default(true);
             $table->timestamps();
             $table->json('images')->nullable();
 

@@ -33,6 +33,5 @@ function fetchOrder(){
 
 if (checkoutContainer){
     getCartProducts();
+    document.getElementById("checkout-button").addEventListener("click", fetchOrder);
 }
-
-document.getElementById("checkout-button").addEventListener("click", fetchOrder);

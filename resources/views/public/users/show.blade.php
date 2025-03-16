@@ -1,12 +1,11 @@
 <x-public-layout>
-
     <main class="pt-20 flex flex-col gap-3 items-center">
         <h1 class="text-3xl"><b>Bienvenido/a, {{ $user->name }} {{ $user->surname }}</b></h1>
         <div class="flex flex-col gap-20">
             <div class="flex flex-col gap-5">
                 <p class="text-2xl">Tus datos:</p>
                 <div class="text-xl">Nombre: <b>{{ $user->name }} {{ $user->surname }}</b></div>
-                <div class="text-xl">Cliente desde: <b>{{ \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}</b></div> <!-- fecha en formato dd-mm-yyyy y ignorando la hora -->
+                <div class="text-xl">Cliente desde: <b>{{ \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}</b></div> {{-- fecha en formato dd-mm-yyyy y ignorando la hora --}}
                 <div class="text-xl">Total de pedidos: <b>{{ $orderQuantity }}</b></div>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
@@ -44,5 +43,4 @@
             </div>
         </div>
     </main>
-    <script src="{{ mix('resources/js/productfilter.js') }}" defer></script>
 </x-public-layout>

@@ -15,7 +15,7 @@ export default class Cart {
 
             this.storage.setItem(this.productsKey, JSON.stringify(products));
             this.storage.setItem(this.cacheTimeKey, Date.now().toString());
-            console.log("⚡ Productos actualizados desde el servidor.");
+            // console.log("⚡ Productos actualizados desde el servidor.");
             return products;
         } catch (error) {
             console.error("Error al obtener productos:", error);
@@ -32,12 +32,12 @@ export default class Cart {
             const cachedVersion = this.storage.getItem("products_version");
 
             if (cachedVersion !== last_updated_at) {
-                console.log("⚡ Productos han cambiado, actualizando...");
+                // console.log("⚡ Productos han cambiado, actualizando...");
                 this.storage.setItem("products_version", last_updated_at);
                 return await this.fetchProducts();
             }
             
-            console.log("✅ Caché aún válida.");
+            // console.log("✅ Caché aún válida.");
             this.storage.setItem(this.cacheTimeKey, Date.now().toString());
             return JSON.parse(this.storage.getItem(this.productsKey)) || [];
         } catch (error) {
@@ -51,7 +51,7 @@ export default class Cart {
         const now = Date.now();
 
         if (now - cacheTime > this.cacheTTL) {
-            console.log("⚡ Caché expirada, verificando con el servidor...");
+            // console.log("⚡ Caché expirada, verificando con el servidor...");
             return await this.checkForUpdates();
         }
 
@@ -74,14 +74,14 @@ export default class Cart {
         }
 
         this.storage.setItem(this.cartKey, JSON.stringify(cart));
-        console.log("Carrito actualizado:", cart);
+        // console.log("Carrito actualizado:", cart);
     }
 
     removeFromCart(productId) {
         let cart = this.getCart();
         cart = cart.filter(item => item.productId !== productId);
         this.storage.setItem(this.cartKey, JSON.stringify(cart));
-        console.log("Producto eliminado. Carrito actualizado:", cart);
+        // console.log("Producto eliminado. Carrito actualizado:", cart);
     }
 
     async checkout() {
@@ -89,7 +89,7 @@ export default class Cart {
         let cart = this.getCart();
 
         if (cart.length === 0) {
-            console.log("El carrito está vacío");
+            // console.log("El carrito está vacío");
             return;
         }
 
@@ -108,7 +108,9 @@ export default class Cart {
             }
 
             const data = await response.json();
-            console.log("Compra realizada:", data);
+
+            Turbo.visit("/");
+            // console.log("Compra realizada:", data);
 
             this.storage.removeItem(this.cartKey);
         } catch (error) {

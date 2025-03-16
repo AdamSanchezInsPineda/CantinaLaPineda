@@ -23,5 +23,4 @@
             @endforeach  
         </div>        
     </div>
-    <script src="{{ mix('resources/js/productfilter.js') }}" defer></script>
 </x-public-layout>

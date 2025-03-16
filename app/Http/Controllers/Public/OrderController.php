@@ -20,10 +20,9 @@ class OrderController extends PublicController
 
     function store(Request $request)
     {
-        Log::info($request->all());
+        $cart = $request;
 
         return response()->json(['message' => 'Compra realizada']);
-
     }
     public function show(string $id) 
     {

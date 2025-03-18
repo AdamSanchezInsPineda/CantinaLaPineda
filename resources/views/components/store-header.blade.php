@@ -2,7 +2,7 @@
     <div class="flex flex-row justify-between mt-4">
         {{-- BARRA DE BUSQUEDA: GENERAL --}}
         <div class=" ml-5 flex flex-row justify-center items-center gap-10">
-            @if (request()->is('/') || strpos(request()->path(), 'category') !== false) <!-- si la url esta en / o contiene /category -->
+            @if (request()->is('/') || strpos(request()->path(), 'category') !== false) {{-- si la url esta en / o contiene /category --}}
             <div class="flex flex-row items-center justify-center gap-3 mb-3">         
                 <input type="text" name="name" id="search-input" placeholder="Busca tu producto" class="p-2 rounded-full" title="buscar productos">
                 <x-icons.search class="size-6 transform translate-x-[-50px]"/>
@@ -76,5 +76,3 @@
         <div id="cart-content"></div>
     </div>
 </div>
-<script src="{{ mix('resources/js/displaycategoriestablet.js') }}" defer></script>
-<script src="{{ mix('resources/js/mobilemenu.js') }}" defer></script>

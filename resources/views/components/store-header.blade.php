@@ -1,4 +1,4 @@
-<header class="w-full bg-white z-10">
+<header class="w-full bg-white z-10 fixed top-0">
     <div class="flex flex-row justify-between mt-4">
         {{-- BARRA DE BUSQUEDA: GENERAL --}}
         <div class=" ml-5 flex flex-row justify-center items-center gap-10">

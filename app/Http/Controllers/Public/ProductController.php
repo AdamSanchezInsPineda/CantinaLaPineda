@@ -11,13 +11,17 @@ class ProductController extends PublicController
 {
     public function index(Request $request)
     {
-        $products = Product::where('featured', true)->get();
+        $products = Product::where('featured', true)->where('active', true)->get();
         return view("public.products.list", compact('products'));
     }
 
     public function show(string $id)
     {
         $product = Product::find($id);
+
+        if (!$product || !$product->active) {
+            abort(404);
+        }
 
         $images = $product->images ?? [];
 

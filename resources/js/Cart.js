@@ -62,25 +62,27 @@ export default class Cart {
         return JSON.parse(this.storage.getItem(this.cartKey)) || [];
     }
 
-    addToCart(productId, quantity = 1) {
+    addToCart(id, quantity = 1) {
         let cart = this.getCart();
 
-        let existingItem = cart.find(item => item.productId === productId);
+        let existingItem = cart.find(item => item.id === id);
 
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
-            cart.push({ productId, quantity });
+            cart.push({ id, quantity });
         }
 
         this.storage.setItem(this.cartKey, JSON.stringify(cart));
         // console.log("Carrito actualizado:", cart);
     }
 
-    removeFromCart(productId) {
+    removeFromCart(id) {
         let cart = this.getCart();
-        cart = cart.filter(item => item.productId !== productId);
+        id = Number(id);
+        cart = cart.filter(item => item.id !== id);
         this.storage.setItem(this.cartKey, JSON.stringify(cart));
+        Turbo.visit(window.location.href);
         // console.log("Producto eliminado. Carrito actualizado:", cart);
     }
 
@@ -104,7 +106,8 @@ export default class Cart {
             });
 
             if (!response.ok) {
-                throw new Error("Error en el checkout");
+                const errorData = await response.json();
+                throw new Error(`Error en el checkout, ${errorData.error}`);
             }
 
             const data = await response.json();

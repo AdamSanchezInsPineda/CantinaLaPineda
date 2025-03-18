@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Preference;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
@@ -17,12 +18,71 @@ class OrderController extends PublicController
     {
         return view("public.orders.checkout");
     }
-
     function store(Request $request)
     {
-        $cart = $request;
+        try {
+            $productLimit = Preference::where('key', 'ProductLimit')->value('value') ?? 3;
 
-        return response()->json(['message' => 'Compra realizada']);
+            $request->validate([
+                'cart' => 'required|array',
+                'cart.*.id' => 'required|exists:products,id',
+                'cart.*.quantity' => 'required|integer|min:1|max:' . $productLimit,
+            ]);            
+    
+            $user = auth()->user();
+            if (!$user) {
+                return response()->json(['error' => 'Usuario no autenticado'], 401);
+            }
+    
+            $totalPrice = 0;
+    
+            foreach ($request->cart as $item) {
+                $product = Product::find($item['id']);
+                
+                if (!$product) {
+                    return response()->json(['error' => 'Producto no encontrado'], 404);
+                }
+                
+                /*if ($product->stock < $item['quantity']) {
+                    return response()->json([
+                        'error' => "Stock insuficiente para {$product->name}. Stock disponible: {$product->stock}"
+                    ], 400);
+                }*/
+                
+                $totalPrice += $product->price * $item['quantity'];
+            }
+    
+            $order = new Order();
+            $order->user_id = $user->id;
+            $order->total_price = $totalPrice;
+            $order->status = 'ordered';
+            $order->order_date = now();
+            $order->save();
+    
+            foreach ($request->cart as $item) {
+                $product = Product::find($item['id']);
+                
+                $orderProduct = new OrderProduct();
+                $orderProduct->product_id = $item['id'];
+                $orderProduct->order_id = $order->id;
+                $orderProduct->quantity = $item['quantity'];
+                $orderProduct->save();
+                
+                // $product->stock -= $item['quantity'];
+                $product->save();
+            }
+    
+            Log::info("Orden #{$order->id} creada por el usuario {$user->id} por un total de {$totalPrice}");
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Orden creada correctamente',
+                'order_id' => $order->id
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error("Error al crear la orden: " . $e->getMessage());
+            return response()->json(['error' => 'Error al procesar la orden'], 500);
+        }
     }
     public function show(string $id) 
     {

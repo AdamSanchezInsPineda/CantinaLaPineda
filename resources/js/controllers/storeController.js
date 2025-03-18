@@ -41,7 +41,7 @@ const appendCart = async () => {
 
     const cartHTML = products
         .map(product => {
-            const foundItem = cartItems.find(item => item.productId === product.id);
+            const foundItem = cartItems.find(item => item.id === product.id);
             if (!foundItem) return "";
             return `
                 <div class="flex justify-between items-center">
@@ -51,15 +51,25 @@ const appendCart = async () => {
                         <p>Precio: ${(product.price * foundItem.quantity).toFixed(2)}€</p>
                     </div>
                     <p>Cantidad: ${foundItem.quantity}</p>
+                    <button class="delete-button" data-id="${foundItem.id}">Borrar</button>
                 </div>
             `;
         })
         .join("");
 
-    cartContent.innerHTML = cartHTML;
+    cartContent.insertAdjacentHTML("beforeend", cartHTML);
+
+    // Agregar eventos a los botones después de que estén en el DOM
+    document.querySelectorAll(".delete-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const productId = button.getAttribute("data-id");
+            cart.removeFromCart(productId);
+            appendCart();
+        });
+    });
 
     if (cartContent.hasChildNodes()) {
-        cartContent.innerHTML += `<div class="flex justify-center"><a href="/checkout">Pagar</a></div>`;
+        cartContent.insertAdjacentHTML("beforeend", `<div class="flex justify-center"><a href="/checkout">Pagar</a></div>`);
     }
 };
 
@@ -78,8 +88,8 @@ const addProductListeners = async () => {
 // Manejar click en producto
 const productClickHandler = (e) => {
     e.preventDefault();
-    const productId = e.currentTarget.id.replace("product-", "");
-    cart.addToCart(Number(productId));
+    const id = e.currentTarget.id.replace("product-", "");
+    cart.addToCart(Number(id));
     appendCart();
     toggleCart();
 };

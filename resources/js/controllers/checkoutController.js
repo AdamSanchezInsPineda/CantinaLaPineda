@@ -22,11 +22,14 @@ async function getCartProducts(){
         checkoutContent.innerHTML = "";
 
         let cartItems = cart.getCart();
+        if (!cartItems || cartItems.length === 0) {
+            Turbo.visit("/");
+        }
         let products = await cart.getProducts();
         let total = 0;
 
         products.forEach(product => {
-            let foundItem = cartItems.find(item => item.productId === product.id);
+            let foundItem = cartItems.find(item => item.id === product.id);
             if (foundItem) {
                 total += Number(product.price * foundItem.quantity);
                 checkoutContent.innerHTML +=    `<li class="flex flex-wrap gap-4 text-sm">${product.name}<span class="ml-auto font-bold">${(product.price * foundItem.quantity).toFixed(2)}€</span></li>`;

@@ -102,4 +102,12 @@ class CategoryController extends Controller
         ]);
         return redirect()->route('admin.category.parameters', request('category_id'));
     }
+
+    public function disableParameters(string $id)
+    {
+        $categoryParameter = CategoryParameter::findOrFail($id);
+        $categoryParameter->active = !$categoryParameter->active; // cambia el estado al contrario al actual
+        $categoryParameter->save();
+        return redirect()->route('admin.category.index');
+    }
 }

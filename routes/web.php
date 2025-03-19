@@ -11,6 +11,12 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\PreferenceController as AdminPreferenceController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\RedsysController;
+
+Route::get('/bizum/form', [RedsysController::class, 'showForm']);
+Route::post('/bizum/pay', [RedsysController::class, 'payWithBizum']);
+Route::get('/bizum/success', [RedsysController::class, 'success'])->name('redsys.success');
+Route::get('/bizum/fail', [RedsysController::class, 'fail'])->name('redsys.fail');
 
 Route::get('/', [PublicProductController::class, 'index'])->name('product.index');
 

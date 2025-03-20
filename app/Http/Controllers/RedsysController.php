@@ -23,8 +23,8 @@ class RedsysController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:1',
-            'order_id' => 'required|string',
-            'phone' => 'required|string|min:9|max:15'
+            'order_id' => 'required|string|min:4|max:12',
+            'phone' => ['required', 'string', 'regex:/^\+[0-9]{5,15}$/']
         ]);
 
         try {
@@ -34,19 +34,23 @@ class RedsysController extends Controller
                 $request->phone
             );
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Error al generar los datos de pago: ' . $e->getMessage()]);
+            return redirect()->back()
+                ->withErrors(['error' => 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.' . $e->getMessage()])
+                ->withInput();
         }
 
         return view('redsys.submit', compact('formData'));
     }
 
-    public function success()
+    public function success(Request $request)
     {
-        return view('redsys.success');
+        $params = $request->all();
+        return view('redsys.success', compact('params'));
     }
-
-    public function fail()
+    
+    public function fail(Request $request)
     {
-        return view('redsys.fail');
+        $params = $request->all();
+        return view('redsys.fail', compact('params'));
     }
 }

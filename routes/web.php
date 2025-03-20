@@ -17,6 +17,7 @@ Route::get('/bizum/form', [RedsysController::class, 'showForm']);
 Route::post('/bizum/pay', [RedsysController::class, 'payWithBizum']);
 Route::get('/bizum/success', [RedsysController::class, 'success'])->name('redsys.success');
 Route::get('/bizum/fail', [RedsysController::class, 'fail'])->name('redsys.fail');
+Route::post('/redsys/notification', [RedsysController::class, 'notification'])->name('redsys.notification');
 
 Route::get('/', [PublicProductController::class, 'index'])->name('product.index');
 

@@ -35,7 +35,7 @@ class RedsysController extends Controller
             );
         } catch (\Exception $e) {
             return redirect()->back()
-                ->withErrors(['error' => 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.' . $e->getMessage()])
+                ->withErrors(['error' => 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.'])
                 ->withInput();
         }
 
@@ -47,10 +47,42 @@ class RedsysController extends Controller
         $params = $request->all();
         return view('redsys.success', compact('params'));
     }
-    
+
     public function fail(Request $request)
     {
         $params = $request->all();
         return view('redsys.fail', compact('params'));
+    }
+
+    public function notification(Request $request)
+    {
+        try {
+            // Procesar la notificación
+            $data = $this->redsys->processNotification(
+                $request->input('Ds_MerchantParameters'),
+                $request->input('Ds_Signature')
+            );
+
+            // Obtener detalles de la transacción
+            $orderId = $data['Ds_Order'];
+            $amount = $data['Ds_Amount'] / 100; // Convertir a euros
+            $responseCode = $data['Ds_Response'];
+
+            if ($responseCode === '0000') {
+                // Pago exitoso
+                // Actualizar el estado del pedido en la base de datos
+                // Ejemplo: Pedido::where('order_id', $orderId)->update(['status' => 'paid']);
+            } else {
+                // Pago fallido
+                // Actualizar el estado del pedido en la base de datos
+                // Ejemplo: Pedido::where('order_id', $orderId)->update(['status' => 'failed']);
+            }
+
+            // Responder a Redsys con un código 200 (éxito)
+            return response('Notificación recibida', 200);
+        } catch (\Exception $e) {
+            // Registrar el error y responder con un código 400 (error)
+            return response('Error al procesar la notificación: ' . $e->getMessage(), 400);
+        }
     }
 }

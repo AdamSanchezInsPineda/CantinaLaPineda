@@ -41,7 +41,7 @@ class RedsysService
             'DS_MERCHANT_BIZUM_MOBILENUMBER' => $validPhone, // Número de teléfono con prefijo
             'DS_MERCHANT_URLOK' => route('redsys.success'), // URL de éxito
             'DS_MERCHANT_URLKO' => route('redsys.fail'), // URL de fallo
-            'DS_MERCHANT_MERCHANTURL' => route('redsys.success'), // URL de notificación
+            'DS_MERCHANT_MERCHANTURL' => route('redsys.notification'), // URL de notificación
         ];
 
         // Generar la firma

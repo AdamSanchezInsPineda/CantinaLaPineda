@@ -9,11 +9,11 @@
         <div class="flex items-center gap-10 md:gap-60 mt-10 flex-col md:flex-row">
             <div class="flex flex-col">
                 <label for="name">Nombre:</label>
-                <input type="text" name="name" id="name" placeholder="Producto interesante">
+                <input type="text" name="name" id="name" placeholder="Producto interesante" maxlength="30">
             </div>
             <div class="flex flex-col">
                 <label for="description">Descripción:</label>
-                <input type="text" name="description" id="description" placeholder="Descripcion descriptiva">
+                <input type="text" name="description" id="description" placeholder="Descripcion descriptiva" maxlength="300">
             </div>
         </div>
 

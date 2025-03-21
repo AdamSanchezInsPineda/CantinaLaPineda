@@ -23,24 +23,31 @@ class RedsysController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:1',
-            'order_id' => 'required|string|min:4|max:12',
-            'phone' => ['required', 'string', 'regex:/^\+[0-9]{5,15}$/']
+            'order_id' => 'required|string|max:12',
+            'phone' => ['string', 'regex:/^\+[0-9]{5,15}$/']
         ]);
-
+    
         try {
+            \Log::info("Intentando generar datos de Redsys", $request->all());
+    
             $formData = $this->redsys->generateFormData(
                 $request->amount,
                 $request->order_id,
                 $request->phone
             );
+    
+            \Log::info("Datos de Redsys generados correctamente", $formData);
         } catch (\Exception $e) {
+            \Log::error("Error en Redsys: " . $e->getMessage());
+    
             return redirect()->back()
                 ->withErrors(['error' => 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.'])
                 ->withInput();
         }
-
+    
         return view('redsys.submit', compact('formData'));
     }
+    
 
     public function success(Request $request)
     {

@@ -3,13 +3,19 @@ import Cart from '../Cart';
 let cart = new Cart();
 
 function initCheckout(){
-    const checkoutButton = document.getElementById("checkout-button");
+    const bookButton = document.getElementById("book-button");
+    const payButton = document.getElementById("pay-button");
 
     getCartProducts();
 
-    if (checkoutButton){
-        checkoutButton.removeEventListener("click", fetchOrder);
-        checkoutButton.addEventListener("click", fetchOrder);
+    if (bookButton){
+        bookButton.removeEventListener("click", fetchBook);
+        bookButton.addEventListener("click", fetchBook);
+    }
+
+    if (payButton){
+        payButton.removeEventListener("click", fetchPayment);
+        payButton.addEventListener("click", fetchPayment);
     }
 }
 
@@ -41,8 +47,12 @@ async function getCartProducts(){
     }
 }
 
-function fetchOrder(){
-    cart.checkout();
+function fetchBook(){
+    cart.checkout("/checkout/book");
+}
+
+function fetchPayment(){
+    cart.checkout("/checkout/pay");
 }
 
 document.addEventListener("turbo:load", initCheckout);

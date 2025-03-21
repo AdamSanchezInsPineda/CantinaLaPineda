@@ -14,21 +14,23 @@ class RedsysService
     /**
      * Genera los datos del formulario para la solicitud de pago.
      */
-    public function generateFormData($amount, $orderId, $bizumPhone)
+    public function generateFormData($amount, $orderId, $bizumPhone = null)
     {
         // Convertir el importe a céntimos (entero) como requiere Redsys
         $amountInCents = (int) ($amount * 100);
-
+    
         // Formatear el número de pedido: debe tener entre 4 y 12 caracteres alfanuméricos
         $formattedOrderId = str_pad(substr($orderId, 0, 12), 12, '0', STR_PAD_RIGHT);
-
+    
         // Limpiar y validar el número de teléfono
-        $cleanPhone = preg_replace('/[^0-9+]/', '', $bizumPhone);
-        if (!preg_match('/^\+[0-9]{5,15}$/', $cleanPhone)) {
-            throw new \InvalidArgumentException('El número de teléfono no tiene un formato válido.');
+        if ($bizumPhone) {
+            $cleanPhone = preg_replace('/[^0-9+]/', '', $bizumPhone);
+            if (!preg_match('/^\+[0-9]{5,15}$/', $cleanPhone)) {
+                throw new \InvalidArgumentException('El número de teléfono no tiene un formato válido.');
+            }
+            $validPhone = $cleanPhone;
         }
-        $validPhone = $cleanPhone;
-
+    
         // Datos de la solicitud
         $data = [
             'DS_MERCHANT_MERCHANTCODE' => $this->config['merchant_code'],
@@ -38,15 +40,19 @@ class RedsysService
             'DS_MERCHANT_CURRENCY' => $this->config['currency'],
             'DS_MERCHANT_ORDER' => $formattedOrderId,
             'DS_MERCHANT_PAYMETHODS' => 'z', // 'z' para Bizum (en minúscula)
-            'DS_MERCHANT_BIZUM_MOBILENUMBER' => $validPhone, // Número de teléfono con prefijo
             'DS_MERCHANT_URLOK' => route('redsys.success'), // URL de éxito
             'DS_MERCHANT_URLKO' => route('redsys.fail'), // URL de fallo
             'DS_MERCHANT_MERCHANTURL' => route('redsys.notification'), // URL de notificación
         ];
-
+    
+        // Si se proporcionó el teléfono, agregarlo al array de datos
+        if (isset($validPhone)) {
+            $data['DS_MERCHANT_BIZUM_MOBILENUMBER'] = $validPhone; // Número de teléfono con prefijo
+        }
+    
         // Generar la firma
         $signature = $this->generateSignature($data);
-
+    
         return [
             'Ds_MerchantParameters' => $this->base64_url_encode(json_encode($data)), // Codificación Base64 URL-safe
             'Ds_Signature' => $signature,

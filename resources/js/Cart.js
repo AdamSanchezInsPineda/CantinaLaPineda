@@ -82,11 +82,10 @@ export default class Cart {
         id = Number(id);
         cart = cart.filter(item => item.id !== id);
         this.storage.setItem(this.cartKey, JSON.stringify(cart));
-        Turbo.visit(window.location.href);
         // console.log("Producto eliminado. Carrito actualizado:", cart);
     }
 
-    async checkout() {
+    async checkout(url) {
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         let cart = this.getCart();
 
@@ -96,7 +95,7 @@ export default class Cart {
         }
 
         try {
-            const response = await fetch("/checkout/new", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

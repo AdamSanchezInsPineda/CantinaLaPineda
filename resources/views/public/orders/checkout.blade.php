@@ -6,7 +6,10 @@
           <h2 class="text-3xl font-bold text-slate-900">Haz una reserva</h2>
           <p class="text-slate-900 text-sm mt-4"> Reserva tu pedido.</p>
 
-          <button id="checkout-button" type="button" class="mt-8 w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide">Reserva</button>
+          <div class="flex flex-col  sm:flex-row justify-center mt-8 gap-3">
+            <button id="book-button" type="button" class="w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide">Reserva</button>
+            <button id="pay-button" type="button" class="w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide">Pagar con bizum</button>
+          </div>
         </div>
 
         <div class="bg-gray-100 p-6 rounded-md">

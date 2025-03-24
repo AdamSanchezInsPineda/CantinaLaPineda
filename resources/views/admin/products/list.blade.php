@@ -30,6 +30,7 @@
                             <b class="text-xl">{{ $product->name }}</b>
                             <p class="text-lg">{{ number_format($product->price, 2, '.', '') }} €</p>
                             <p class="text-sm">Categoria: {{ $product->category->name }}</p>
+                            <p class="text-sm">Codigo del producto: {{ $product->code }}</p>
                         </div>              
                     </div>
                     <div class="flex items-center justify-center">

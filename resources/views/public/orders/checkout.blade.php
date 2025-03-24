@@ -7,8 +7,7 @@
           <p class="text-slate-900 text-sm mt-4"> Reserva tu pedido.</p>
 
           <div class="flex flex-col  sm:flex-row justify-center mt-8 gap-3">
-            <button id="book-button" type="button" class="w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide">Reserva</button>
-            <button id="pay-button" type="button" class="w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide">Pagar con bizum</button>
+            <button id="order-button" type="button" class="w-40 py-3 text-[15px] font-medium bg-purple-500 text-white rounded-md hover:bg-purple-600 tracking-wide">Finalizar</button>
           </div>
         </div>
 

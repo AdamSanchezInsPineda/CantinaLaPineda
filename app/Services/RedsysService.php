@@ -20,7 +20,7 @@ class RedsysService
         $amountInCents = (int) ($amount * 100);
     
         // Formatear el número de pedido: debe tener entre 4 y 12 caracteres alfanuméricos
-        $formattedOrderId = str_pad(substr($orderId, 0, 12), 12, '0', STR_PAD_RIGHT);
+        $formattedOrderId = str_pad(substr($orderId, 0, 12), 12, '0', STR_PAD_LEFT);
     
         // Limpiar y validar el número de teléfono
         if ($bizumPhone) {

@@ -26,8 +26,9 @@ Route::get('/products/all', [PublicProductController::class, 'getProducts']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/checkout', [PublicOrderController::class, 'create'])->name('order.summary');
+    Route::post('/checkout/new', [PublicOrderController::class, 'store'])->name('order.store');
     Route::post('/checkout/book', [PublicOrderController::class, 'book'])->name('order.book');
-    Route::post('/checkout/pay', [PublicOrderController::class, 'pay'])->name('order.pay');
+    Route::get('/checkout/finish/{order}', [PublicOrderController::class, 'edit'])->name('order.edit');
     Route::get('/bizum/form', [RedsysController::class, 'showForm']);
     Route::post('/bizum/pay', [RedsysController::class, 'payWithBizum'])->name('redsys.pay');
     Route::get('/bizum/success', [RedsysController::class, 'success'])->name('redsys.success');

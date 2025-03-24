@@ -111,7 +111,7 @@ export default class Cart {
 
             const data = await response.json();
 
-            Turbo.visit("/");
+            Turbo.visit(`/checkout/options/${data.order_id}`);
             // console.log("Compra realizada:", data);
 
             this.storage.removeItem(this.cartKey);

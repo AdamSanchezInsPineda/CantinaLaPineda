@@ -51,7 +51,7 @@
         <div class="flex items-center gap-10 md:gap-60 mt-10 flex-col md:flex-row">
             <div class="flex items-center gap-5">
                 <label for="featured">Producto destacado?</label>
-                <input type="checkbox" name="featured" id="featured">
+                <input type="checkbox" name="featured" id="featured" value="1">
             </div>
         </div>
 

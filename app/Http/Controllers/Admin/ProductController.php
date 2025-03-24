@@ -40,7 +40,7 @@ class ProductController extends Controller
             'name'         => 'required|string|max:255',
             'description'  => 'nullable|string|max:500',
             'price'        => 'required|numeric|min:0',
-            'featured'     => 'boolean',
+            #'featured'     => 'boolean',
             'images'       => 'nullable|array',
             'images.*'     => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);

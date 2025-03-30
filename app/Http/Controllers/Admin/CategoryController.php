@@ -15,8 +15,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
+        $categoryCount = Category::count();
 
-        return view("admin.categories.list", compact('categories'));
+        return view("admin.categories.list", compact('categories', 'categoryCount'));
     }
 
     /**
@@ -101,5 +102,13 @@ class CategoryController extends Controller
             'category_id' => request('category_id')
         ]);
         return redirect()->route('admin.category.parameters', request('category_id'));
+    }
+
+    public function disableParameters(string $id)
+    {
+        $categoryParameter = CategoryParameter::findOrFail($id);
+        $categoryParameter->active = !$categoryParameter->active; // cambia el estado al contrario al actual
+        $categoryParameter->save();
+        return redirect()->route('admin.category.index');
     }
 }

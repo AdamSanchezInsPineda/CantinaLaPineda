@@ -1,10 +1,10 @@
-<header class="w-full bg-white z-10">
+<header class="w-full bg-white z-10 fixed top-0">
     <div class="flex flex-row justify-between mt-4">
         {{-- BARRA DE BUSQUEDA: GENERAL --}}
         <div class=" ml-5 flex flex-row justify-center items-center gap-10">
             @if (request()->is('/') || strpos(request()->path(), 'category') !== false) {{-- si la url esta en / o contiene /category --}}
             <div class="flex flex-row items-center justify-center gap-3 mb-3">         
-                <input type="text" name="name" id="search-input" placeholder="Busca tu producto" class="p-2 rounded-full">
+                <input type="text" name="name" id="search-input" placeholder="Busca tu producto" class="p-2 rounded-full" title="buscar productos">
                 <x-icons.search class="size-6 transform translate-x-[-50px]"/>
             </div>
             @else
@@ -40,16 +40,16 @@
 
         {{-- CARRITO Y USUARIO: TABLET Y PC --}}
         <div class="hidden md:flex flex-row justify-center items-center gap-10 mr-5 ml-36">
-            <button id="cart-button">
+            <button id="cart-button" title="Botón de carrito">
                 <x-icons.cart class="size-8 mb-4"/>
             </button>
-            <a href="{{ route('user.show', optional(Auth::user())->id ?? 0) }}"> {{-- envia el id del usuario, y si no existe envia un 0 para control de errores en en controlador --}}
+            <a href="{{ route('user.show', optional(Auth::user())->id ?? 0) }}" title="Botón de perfil de usuario"> {{-- envia el id del usuario, y si no existe envia un 0 para control de errores en en controlador --}}
                 <x-icons.profile class="size-8 mb-4"/>
             </a>
         </div>
         
         {{-- MENU GENERAL: MOVIL --}}
-        <button id="toggle-btn-2" class="md:hidden mb-4 mr-5">
+        <button id="toggle-btn-2" class="md:hidden mb-4 mr-5" title="Botón para abrir el menú de navegación">
             <x-icons.hamburguer class="size-8"/>
         </button>
         <div id="mobile-menu" class="hidden fixed top-10 left-1/2 transform -translate-x-1/2 bg-gray-200 p-4 mt-10 rounded-md z-50 w-full">

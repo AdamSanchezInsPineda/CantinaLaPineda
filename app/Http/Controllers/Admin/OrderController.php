@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -96,8 +97,18 @@ class OrderController extends Controller
             }, array_keys($monthlySales), $monthlySales)
         ];
 
-        dd($salesData);
-
         return response()->json($salesData);
+    }
+
+    public function getMostSold()
+    {
+        $salesData = Product::join('order_products', 'order_products.product_id', '=', 'products.id')
+        ->join('orders', 'orders.id', '=', 'order_products.order_id')
+        ->select('products.id', 'products.name', DB::raw('SUM(order_products.quantity) as total_sold'))
+        ->groupBy('products.id', 'products.name')
+        ->orderByDesc('total_sold')
+        ->get();
+        
+        return response()->json(['sales' => $salesData]);
     }
 }

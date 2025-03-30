@@ -49,10 +49,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::resource('order', AdminOrderController::class);
     Route::resource('preference', AdminPreferenceController::class);
     Route::resource('user', AdminUserController::class);
-    Route::get('/api/monthly-sales', [AdminOrderController::class, 'getMonthlySales']);
+    Route::get('/data/monthly-sales', [AdminOrderController::class, 'getMonthlySales']);
+    Route::get('/data/most-sold', [AdminOrderController::class, 'getMostSold']);
     Route::get('/category/parameters/{id}', [AdminCategoryController::class, 'listParameters'])->name('category.parameters');
     Route::get('/category/parameters/{id}/create', [AdminCategoryController::class, 'createParameters'])->name('category.parameters.create');
     Route::post('/category/parameters/{id}/store', [AdminCategoryController::class, 'storeParameters'])->name('category.parameters.store');
+    Route::post('/category/parameters/{id}/destroy', [AdminCategoryController::class, 'disableParameters'])->name('category.parameters.destroy');
 });
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');

@@ -6,12 +6,16 @@
                 <button id="toggle-btn" class="lg:hidden"><x-icons.hamburguer class="size-8"/></button>
                 <b class="text-2xl">Categorias:</b>
             </div>
-            <a href="category/create">
-                <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">
-                    <span class="hidden sm:block ">+ Crear categoria</span>
-                    <x-icons.create class="size-6 block sm:hidden"/>
-                </button>
-            </a>
+            @if($categoryCount <= 6)
+                <a href="category/create">
+                    <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">
+                        <span class="hidden sm:block ">+ Crear categoria</span>
+                        <x-icons.create class="size-6 block sm:hidden"/>
+                    </button>
+                </a>
+            @else
+                <div class="bg-red-400 py-2 px-4 rounded-md mr-10 mb-3">maximo de categorias alcanzado</div>
+            @endif
         </header>
 
         <main class="flex flex-col gap-8">

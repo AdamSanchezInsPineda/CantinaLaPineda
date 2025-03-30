@@ -16,8 +16,6 @@
 
         <main class="flex flex-col gap-8">
 
-            <h1 class="hidden lg:block text-4xl text-red-500 font-extrabold">ACUERDATE DE QUE LOS PRODUCTOS DESACTIVADOS TODAVIA SE MUESTRAN EN LA TIENDA CAMBIALO CAMBIALO CAMBIALO</h1>
-
             @foreach($products as $product)
                 <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
                     <div class="flex items-center gap-4 ml-6">
@@ -32,6 +30,7 @@
                             <b class="text-xl">{{ $product->name }}</b>
                             <p class="text-lg">{{ number_format($product->price, 2, '.', '') }} €</p>
                             <p class="text-sm">Categoria: {{ $product->category->name }}</p>
+                            <p class="text-sm">Codigo del producto: {{ $product->code }}</p>
                         </div>              
                     </div>
                     <div class="flex items-center justify-center">

@@ -1,4 +1,4 @@
-<x-public-layout>
+<x-app-layout>
   <div id="checkout-container" class="bg-white p-4">
     <div class="md:max-w-5xl max-w-xl mx-auto">
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -21,4 +21,4 @@
       </div>
     </div>
   </div>
-</x-public-layout>
+</x-app-layout>

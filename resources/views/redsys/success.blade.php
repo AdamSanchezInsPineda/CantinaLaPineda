@@ -12,5 +12,7 @@
         <h2>Detalles de la transacción:</h2>
         <pre>{{ json_encode($params, JSON_PRETTY_PRINT) }}</pre>
     @endif
+
+    <a href="{{ route("product.index") }}" class="">Volver</a>
 </body>
 </html>

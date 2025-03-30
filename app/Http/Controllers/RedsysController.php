@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\RedsysService;
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class RedsysController extends Controller
 {
@@ -22,17 +23,18 @@ class RedsysController extends Controller
     public function payWithBizum(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:1',
             'order_id' => 'required|string|max:12',
             'phone' => ['string', 'regex:/^\+[0-9]{5,15}$/']
         ]);
     
         try {
+            $order = Order::findOrFail($request->order_id);
+
             \Log::info("Intentando generar datos de Redsys", $request->all());
     
             $formData = $this->redsys->generateFormData(
-                $request->amount,
-                $request->order_id,
+                $order->total_price,
+                $order->id,
                 $request->phone
             );
     
@@ -79,10 +81,14 @@ class RedsysController extends Controller
                 // Pago exitoso
                 // Actualizar el estado del pedido en la base de datos
                 // Ejemplo: Pedido::where('order_id', $orderId)->update(['status' => 'paid']);
+
+                Order::find($orderId)->update(['status' => 'ordered']);
             } else {
                 // Pago fallido
                 // Actualizar el estado del pedido en la base de datos
                 // Ejemplo: Pedido::where('order_id', $orderId)->update(['status' => 'failed']);
+
+                Order::find($orderId)->update(['status' => 'denied']);
             }
 
             // Responder a Redsys con un código 200 (éxito)

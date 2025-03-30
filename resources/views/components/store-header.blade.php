@@ -70,9 +70,38 @@
         </div>
     </div>
 </header>
-<div id="cart-container" class="w-full h-screen fixed left-0 top-16 bg-black bg-opacity-50 hidden z-0">
-    <div id="cart" class="bg-white p-10 transform -translate-y-full transition-transform duration-300 opacity-0 pointer-events-none">
-        <h1 class="text-3xl font-bold">Carrito:</h1>
-        <div id="cart-content"></div>
+
+<div id="cart-container" class="w-full h-screen fixed left-0 top-16 bg-black bg-opacity-50 hidden z-50">
+    <div id="cart" class="bg-white p-6 transform -translate-y-full transition-transform duration-300 opacity-0 pointer-events-none max-w-3xl mx-auto rounded-lg shadow-xl overflow-y-auto max-h-[80vh]">
+        <div class="flex justify-between items-center border-b pb-3 mb-4">
+            <h1 class="text-2xl font-bold">Tu Carrito</h1>
+            <button id="close-cart-button" class="text-gray-500 hover:text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        
+        <div id="cart-content" class="divide-y"></div>
+        
+        <div id="cart-summary" class="mt-6 pt-4 border-t">
+            <div class="flex justify-between font-bold text-lg mb-4">
+                <span>Total:</span>
+                <span id="cart-total">0.00€</span>
+            </div>
+            <div class="flex justify-between">
+                <button id="empty-cart" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+                    Vaciar carrito
+                </button>
+                <a href="/checkout" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    Proceder al pago
+                </a>
+            </div>
+        </div>
+        
+        <div id="empty-cart-message" class="hidden py-10 text-center">
+            <p class="text-gray-500 mb-4">Tu carrito está vacío</p>
+            <a href="/" class="text-blue-600 hover:underline">Continuar comprando</a>
+        </div>
     </div>
 </div>

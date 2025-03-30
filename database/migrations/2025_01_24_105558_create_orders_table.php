@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->float('total_price', 8, 2);
-            $table->enum('status', ['pending', 'ordered', 'confirmed', 'denied']);
+            $table->enum('status', ['pending', 'reserved', 'ordered', 'confirmed', 'denied', 'failed']);
             $table->timestamp('order_date');
             $table->timestamp('confirmation_date')->nullable();
             $table->timestamps();

@@ -90,7 +90,6 @@ export default class Cart {
         let cart = this.getCart();
 
         if (cart.length === 0) {
-            // console.log("El carrito está vacío");
             return;
         }
 
@@ -111,12 +110,35 @@ export default class Cart {
 
             const data = await response.json();
 
-            Turbo.visit(`/checkout/options/${data.order_id}`);
+            Turbo.visit(`/checkout/finish/${data.order_id}`);
             // console.log("Compra realizada:", data);
 
             this.storage.removeItem(this.cartKey);
         } catch (error) {
             console.error("Error al hacer checkout:", error);
         }
+    }
+
+    updateQuantity(id, quantity) {
+        id = Number(id);
+        
+        let cart = this.getCart();
+        
+        const index = cart.findIndex(item => item.id === id);
+        
+        if (index !== -1) {
+            quantity = Math.max(1, parseInt(quantity));
+            cart[index].quantity = quantity;
+            
+            this.storage.setItem(this.cartKey, JSON.stringify(cart));
+        }
+        
+        return cart;
+    }
+
+    emptyCart() {
+        this.storage.setItem(this.cartKey, JSON.stringify([]));
+        
+        return [];
     }
 }

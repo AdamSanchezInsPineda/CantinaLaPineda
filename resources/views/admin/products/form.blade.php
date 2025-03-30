@@ -9,6 +9,27 @@
                 {{ isset($product) ? 'Edit Product' : 'Add Product' }}
             </h1>
         </div>
+        @if ($errors->any())
+        <div class="bg-red-50 border border-red-200 text-red-800 rounded-md p-4 mb-4">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i data-lucide="alert-circle" class="w-5 h-5 text-red-500"></i>
+                </div>
+                <div class="ml-3 w-full">
+                    <h3 class="text-sm font-medium text-red-800">
+                        Por favor corrige los siguientes errores:
+                    </h3>
+                    <div class="mt-2 text-sm text-red-700">
+                        <ul class="list-disc pl-5 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
         <div class="grid gap-6">
             <form id="product-form" action="{{ isset($product) ? route('admin.product.update', $product->id) : route('admin.product.store') }}" method="POST" class="space-y-8" enctype="multipart/form-data">
                 @csrf
@@ -22,16 +43,16 @@
                         id="name" 
                         name="name" 
                         :value="$product->name ?? old('name')" 
-                        label="Name"
-                        placeholder="Product name"
+                        label="Nombre"
+                        placeholder="Nombre del producto"
                         required
                         :error="$errors->first('name')"
                     />
                     
                     <x-form-select 
                         id="category" 
-                        name="category" 
-                        label="Category"
+                        name="category_id" 
+                        label="Categoria"
                         required
                         :error="$errors->first('category')"
                     >
@@ -47,30 +68,30 @@
                         name="price" 
                         :value="$product->price ?? old('price')" 
                         step="0.01"
-                        label="Price"
+                        label="Precio"
                         required
                         :error="$errors->first('price')"
                     />
                     
                     <x-form-input 
-                        type="number" 
-                        id="stock" 
-                        name="stock" 
-                        :value="$product->stock ?? old('stock')" 
-                        label="Stock"
+                        type="text" 
+                        id="code" 
+                        name="code" 
+                        :value="$product->code ?? old('code')" 
+                        label="Codigo"
                         required
-                        :error="$errors->first('stock')"
+                        :error="$errors->first('code')"
                     />
                     
                     <x-form-select 
-                        id="status" 
-                        name="status" 
-                        label="Status"
+                        id="featured" 
+                        name="featured" 
+                        label="Destacado"
                         required
                         :error="$errors->first('status')"
                     >
-                        <option value="active" {{ (isset($product) && $product->status == 'active') ? 'selected' : '' }}>Active</option>
-                        <option value="inactive" {{ (isset($product) && $product->status == 'inactive') ? 'selected' : '' }}>Inactive</option>
+                        <option value="1" {{ (isset($product) && $product->featured == true) ? 'selected' : '' }}>Activado</option>
+                        <option value="0" {{ (isset($product) && $product->featured == false) ? 'selected' : '' }}>Desactivado</option>
                     </x-form-select>
                 </div>
                 
@@ -78,11 +99,11 @@
                     id="description" 
                     name="description" 
                     label="Description"
-                    placeholder="Product description"
+                    placeholder="Describe el producto"
                     :error="$errors->first('description')"
                 >{{ $product->description ?? old('description') }}</x-form-textarea>
 
-                <!-- Product Images Section -->
+                {{-- Product Images Section --}}
                 <div class="space-y-4">
                     <div class="flex flex-col space-y-2">
                         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -112,7 +133,7 @@
                         @enderror
                     </div>
 
-                    <!-- Image Preview Grid -->
+                    {{-- Image Preview Grid --}}
                     <div id="image-preview-container" class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
                         @if(isset($product) && $product->images)
                             @foreach($product->images as $image)
@@ -152,14 +173,13 @@
     </div>
 
     <script>
-        // JavaScript code remains the same
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('product-form');
             const imageInput = document.getElementById('images');
             const previewContainer = document.getElementById('image-preview-container');
             let dragSrcEl = null;
 
-            // Handle file selection
+            // Evento que pilla las imagenes
             imageInput.addEventListener('change', function(e) {
                 const files = Array.from(e.target.files);
                 
@@ -171,6 +191,8 @@
                             const div = document.createElement('div');
                             div.className = 'relative group border rounded-lg overflow-hidden';
                             div.draggable = true;
+                            // Les da una id temporal
+                            div.dataset.newImage = 'true';
                             div.innerHTML = `
                                 <img src="${e.target.result}" alt="Product image" class="w-full aspect-square object-cover">
                                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
@@ -193,7 +215,7 @@
                 });
             });
 
-            // Drag and Drop functionality
+            // Funcionalidad drag and drop
             function initDragAndDrop(element) {
                 element.addEventListener('dragstart', handleDragStart);
                 element.addEventListener('dragover', handleDragOver);
@@ -203,7 +225,7 @@
                 element.addEventListener('dragend', handleDragEnd);
             }
 
-            // Initialize drag and drop for existing images
+            // Inicializando drag and drop para las imagenes existentes
             document.querySelectorAll('#image-preview-container > div').forEach(initDragAndDrop);
 
             window.handleDragStart = function(e) {
@@ -259,20 +281,19 @@
                 });
             }
 
-            // Remove image
+            // Quitar imagen
             window.removeImage = function(button) {
                 const imageContainer = button.closest('[draggable="true"]');
                 imageContainer.remove();
             }
 
-            // Form validation
+            // Validación de formulario
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 const name = document.getElementById('name').value;
-                const category = document.getElementById('category').value;
+                const category = document.getElementById('category_id').value;
                 const price = document.getElementById('price').value;
-                const stock = document.getElementById('stock').value;
                 
                 let isValid = true;
                 let errorMessages = [];
@@ -292,13 +313,8 @@
                     errorMessages.push('Price must be a valid positive number');
                 }
                 
-                if (!stock || isNaN(parseInt(stock)) || parseInt(stock) < 0) {
-                    isValid = false;
-                    errorMessages.push('Stock must be a valid positive number');
-                }
-                
                 if (isValid) {
-                    // Update image order before submit
+                    // Actualizar orden de las imagenes
                     const imageOrder = [];
                     document.querySelectorAll('#image-preview-container > div').forEach(function(div) {
                         const imageId = div.dataset.imageId;
@@ -307,10 +323,10 @@
                         }
                     });
 
-                    // Clear existing order inputs
+                    // Borrar orden existente
                     document.querySelectorAll('input[name="image_order[]"]').forEach(input => input.remove());
 
-                    // Add new order inputs
+                    // Añadir nuevo orden
                     imageOrder.forEach(id => {
                         const input = document.createElement('input');
                         input.type = 'hidden';
@@ -325,7 +341,7 @@
                 }
             });
 
-            // File drag and drop zone
+            // Zona de drag and drop
             const dropZone = document.querySelector('label[for="images"]');
             
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -356,11 +372,44 @@
             dropZone.addEventListener('drop', handleDrop, false);
 
             function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
 
-                imageInput.files = files;
-                imageInput.dispatchEvent(new Event('change'));
+                if (dragSrcEl !== this) {
+                    const allImages = [...previewContainer.children];
+                    const draggedIndex = allImages.indexOf(dragSrcEl);
+                    const droppedIndex = allImages.indexOf(this);
+
+                    if (draggedIndex < droppedIndex) {
+                        this.parentNode.insertBefore(dragSrcEl, this.nextSibling);
+                    } else {
+                        this.parentNode.insertBefore(dragSrcEl, this);
+                    }
+                    
+                    // Actualiza el input al terminar
+                    updateImageOrderInputs();
+                }
+
+                this.classList.remove('bg-accent');
+                return false;
+            }
+
+            function updateImageOrderInputs() {
+                // Quitar inputs existentes
+                document.querySelectorAll('input[name="image_order[]"]').forEach(input => input.remove());
+                
+                // Crea nuevos inputs
+                document.querySelectorAll('#image-preview-container > div').forEach(function(div, index) {
+                    const imageId = div.dataset.imageId;
+                    if (imageId) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'image_order[]';
+                        input.value = imageId;
+                        form.appendChild(input);
+                    }
+                });
             }
         });
     </script>

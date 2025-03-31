@@ -71,7 +71,7 @@
     </div>
 </header>
 
-<div id="cart-container" class="w-full h-screen fixed left-0 top-16 bg-black bg-opacity-50 hidden z-50">
+<div id="cart-container" class="w-full h-screen fixed left-0 top-[70px] bg-black bg-opacity-50 hidden z-50">
     <div id="cart" class="bg-white p-6 transform -translate-y-full transition-transform duration-300 opacity-0 pointer-events-none max-w-3xl mx-auto rounded-lg shadow-xl overflow-y-auto max-h-[80vh]">
         <div class="flex justify-between items-center border-b pb-3 mb-4">
             <h1 class="text-2xl font-bold">Tu Carrito</h1>

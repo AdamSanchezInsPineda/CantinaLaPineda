@@ -17,12 +17,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $pendingOrders = Order::where('status', 'ordered')->whereDate('order_date', today()->toDateString())->get();
-        $confirmedOrders = Order::where('status', 'confirmed')->whereDate('order_date', today()->toDateString())->get();
-        $deniedOrders = Order::where('status', 'denied')->whereDate('order_date', today()->toDateString())->get();
-        $allOrders = Order::get();
+        $unattendedOrders = Order::whereIn('status', ['ordered', 'reserved'])->whereDate('order_date', today()->toDateString())->get();
+        $otherOrders = Order::whereIn('status', ['confirmed', 'denied'])->get();
 
-        return view("admin.orders.list", compact('pendingOrders', 'confirmedOrders', 'deniedOrders', 'allOrders'));
+        return view("admin.orders.list", compact('unattendedOrders', 'otherOrders'));
     }
 
     /**

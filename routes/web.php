@@ -22,6 +22,7 @@ Route::resource('user', PublicUserController::class)->only(['show']);
 Route::resource('order', PublicOrderController::class)->only(['show']);
 
 Route::get('/category/{category_name}', [PublicCategoryController::class, 'show'])->name('category.show');
+Route::get('/order/{id}/qr', [PublicOrderController::class, 'generateQR'])->name('order.generateqr');
 
 Route::get('/products/version', [PublicProductController::class, 'getProductsVersion']);
 Route::get('/products/all', [PublicProductController::class, 'getProducts']);

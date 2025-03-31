@@ -21,7 +21,10 @@
                             <div>Precio final: <b>{{ $order->total_price }} €</b></div>
                             <div>Estado:
                                 @if ($order->status == 'ordered')
-                                    <div>Pendiente de revisión</div>
+                                    <div>Pagado con Bizum</div>
+                                @endif
+                                @if ($order->status == 'reserved')
+                                <div>Reservado</div>
                                 @endif
                                 @if ($order->status == 'confirmed')
                                     <div>Pagado y recogido</div>
@@ -34,6 +37,11 @@
                                 <a href="/order/{{ $order->id }}">
                                     <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">
                                         <span class="">Ver factura</span>
+                                    </button>
+                                </a>
+                                <a href="/order/{{ $order->id }}/qr">
+                                    <button class="bg-black text-white py-2 px-4 rounded-md mr-10 mb-3 hover:bg-gray-700">
+                                        <span class="">Ver QR</span>
                                     </button>
                                 </a>
                             </div>

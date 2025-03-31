@@ -11,6 +11,7 @@ use App\Models\Preference;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class OrderController extends PublicController
 {
@@ -111,5 +112,10 @@ class OrderController extends PublicController
         $order->update(['status' => 'reserved']);
     
         return view('public.orders.success');
+    }
+    public function generateQR(string $id) 
+    {
+        $qrCode = QrCode::format('png')->size(300)->generate(encrypt($id));
+        return response($qrCode)->header('Content-Type', 'image/png');
     }
 }

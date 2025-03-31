@@ -65,88 +65,14 @@
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const data = [
-                { name: 'Jan', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Feb', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Mar', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Apr', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'May', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Jun', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Jul', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Aug', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Sep', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Oct', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Nov', total: Math.floor(Math.random() * 5000) + 1000 },
-                { name: 'Dec', total: Math.floor(Math.random() * 5000) + 1000 }
-            ];
-    
-            const options = {
-                series: [{
-                    name: 'Sales',
-                    data: data.map(item => item.total)
-                }],
-                chart: {
-                    type: 'bar',
-                    height: 350,
-                    toolbar: {
-                        show: false
-                    }
-                },
-                plotOptions: {
-                    bar: {
-                        borderRadius: 4,
-                        columnWidth: '70%',
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                colors: ['#6366F1'],
-                xaxis: {
-                    categories: data.map(item => item.name),
-                    labels: {
-                        style: {
-                            colors: '#888888',
-                            fontSize: '12px'
-                        }
-                    },
-                    axisBorder: {
-                        show: false
-                    },
-                    axisTicks: {
-                        show: false
-                    }
-                },
-                yaxis: {
-                    labels: {
-                        style: {
-                            colors: '#888888',
-                            fontSize: '12px'
-                        },
-                        formatter: function (value) {
-                            return '$' + value;
-                        }
-                    }
-                },
-                grid: {
-                    borderColor: '#E5E7EB',
-                    strokeDashArray: 4,
-                    xaxis: {
-                        lines: {
-                            show: false
-                        }
-                    }
-                }
-            };
 
-            document.addEventListener("turbo:load", () => {
-                const chart = new ApexCharts(document.querySelector("#overview-chart"), options);
-                chart.render();
-            });
-        });
-    </script>
+    <div class="mt-10 flex flex-col items-center justify-center">
+        <p class="text-3xl">Ventas mensuales 2025:</p>
+        <canvas id="salesChart" width="800" height="600"></canvas>
+        <p class="text-3xl mt-10">Productos mas vendidos:</p>
+        <canvas id="mostSoldChart" width="800" height="600"></canvas>
+
+        <script src="{{ mix('resources/js/monthlysalesgraph.js') }}" defer></script>
+        <script src="{{ mix('resources/js/mostsoldgraph.js') }}" defer></script>
+    </div>
 </x-admin-layout>

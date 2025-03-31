@@ -15,7 +15,7 @@ export default class Cart {
 
             this.storage.setItem(this.productsKey, JSON.stringify(products));
             this.storage.setItem(this.cacheTimeKey, Date.now().toString());
-            console.log("⚡ Productos actualizados desde el servidor.");
+            // console.log("⚡ Productos actualizados desde el servidor.");
             return products;
         } catch (error) {
             console.error("Error al obtener productos:", error);
@@ -32,12 +32,12 @@ export default class Cart {
             const cachedVersion = this.storage.getItem("products_version");
 
             if (cachedVersion !== last_updated_at) {
-                console.log("⚡ Productos han cambiado, actualizando...");
+                // console.log("⚡ Productos han cambiado, actualizando...");
                 this.storage.setItem("products_version", last_updated_at);
                 return await this.fetchProducts();
             }
-65
-            console.log("✅ Caché aún válida.");
+            
+            // console.log("✅ Caché aún válida.");
             this.storage.setItem(this.cacheTimeKey, Date.now().toString());
             return JSON.parse(this.storage.getItem(this.productsKey)) || [];
         } catch (error) {
@@ -51,7 +51,7 @@ export default class Cart {
         const now = Date.now();
 
         if (now - cacheTime > this.cacheTTL) {
-            console.log("⚡ Caché expirada, verificando con el servidor...");
+            // console.log("⚡ Caché expirada, verificando con el servidor...");
             return await this.checkForUpdates();
         }
 
@@ -62,56 +62,83 @@ export default class Cart {
         return JSON.parse(this.storage.getItem(this.cartKey)) || [];
     }
 
-    addToCart(productId, quantity = 1) {
+    addToCart(id, quantity = 1) {
         let cart = this.getCart();
 
-        let existingItem = cart.find(item => item.productId === productId);
+        let existingItem = cart.find(item => item.id === id);
 
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
-            cart.push({ productId, quantity });
+            cart.push({ id, quantity });
         }
 
         this.storage.setItem(this.cartKey, JSON.stringify(cart));
-        console.log("Carrito actualizado:", cart);
+        // console.log("Carrito actualizado:", cart);
     }
 
-    removeFromCart(productId) {
+    removeFromCart(id) {
         let cart = this.getCart();
-        cart = cart.filter(item => item.productId !== productId);
+        id = Number(id);
+        cart = cart.filter(item => item.id !== id);
         this.storage.setItem(this.cartKey, JSON.stringify(cart));
-        console.log("Producto eliminado. Carrito actualizado:", cart);
+        // console.log("Producto eliminado. Carrito actualizado:", cart);
     }
 
-    async checkout(token) {
+    async checkout(url) {
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         let cart = this.getCart();
 
         if (cart.length === 0) {
-            console.log("El carrito está vacío");
             return;
         }
 
         try {
-            const response = await fetch("/checkout", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    'X-CSRF-TOKEN': token
                 },
                 body: JSON.stringify({ cart })
             });
 
             if (!response.ok) {
-                throw new Error("Error en el checkout");
+                const errorData = await response.json();
+                throw new Error(`Error en el checkout, ${errorData.error}`);
             }
 
             const data = await response.json();
-            console.log("Compra realizada:", data);
+
+            Turbo.visit(`/checkout/finish/${data.order_id}`);
+            // console.log("Compra realizada:", data);
 
             this.storage.removeItem(this.cartKey);
         } catch (error) {
             console.error("Error al hacer checkout:", error);
         }
+    }
+
+    updateQuantity(id, quantity) {
+        id = Number(id);
+        
+        let cart = this.getCart();
+        
+        const index = cart.findIndex(item => item.id === id);
+        
+        if (index !== -1) {
+            quantity = Math.max(1, parseInt(quantity));
+            cart[index].quantity = quantity;
+            
+            this.storage.setItem(this.cartKey, JSON.stringify(cart));
+        }
+        
+        return cart;
+    }
+
+    emptyCart() {
+        this.storage.setItem(this.cartKey, JSON.stringify([]));
+        
+        return [];
     }
 }

@@ -10,7 +10,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^11.31",
+        "laravel/framework": "^11.44.1",
+        "barryvdh/laravel-dompdf": "^3.1",
         "laravel/tinker": "^2.9",
         "simplesoftwareio/simple-qrcode": "^4.2"
     },

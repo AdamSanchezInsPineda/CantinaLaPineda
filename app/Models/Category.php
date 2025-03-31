@@ -15,6 +15,9 @@ class Category extends Model
     public function products(): HasMany {
         return $this->hasMany(Product::class);
     }
+    public function category_parameters(): HasMany {
+        return $this->hasMany(CategoryParameter::class);
+    }
 
     protected static function booted()
     {

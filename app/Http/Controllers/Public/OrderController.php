@@ -55,7 +55,7 @@ class OrderController extends PublicController
             $order = new Order();
             $order->user_id = $user->id;
             $order->total_price = $totalPrice;
-            $order->status = 'ordered';
+            $order->status = 'pending';
             $order->order_date = now();
             $order->save();
     
@@ -81,7 +81,7 @@ class OrderController extends PublicController
             ], 201);
         } catch (\Exception $e) {
             Log::error("Error al crear la orden: " . $e->getMessage());
-            return response()->json(['error' => 'Error al procesar la orden'], 500);
+            return response()->json(['error' => 'Error al procesar la orden'. $e->getMessage()], 500);
         }
     }
     public function show(string $id) 
@@ -91,5 +91,25 @@ class OrderController extends PublicController
         $pdf = Pdf::loadView('public.orders.generatePDF', ['order' => $order]);
         
         return $pdf->download('factura.pdf');
+    }
+    public function edit(string $id)
+    {
+        $order = Order::findOrFail($id);
+        return view('public.orders.options', compact('order'));
+    }
+    public function update(Request $request) {
+        $request->validate([
+            'order_id' => 'required|exists:orders,id',
+        ]);
+    
+        $order = Order::findOrFail($request->order_id);
+
+        if ($order->status === 'reserved') {
+            return redirect()->back()->with('warning', 'Esta orden ya está reservada.');
+        }
+
+        $order->update(['status' => 'reserved']);
+    
+        return view('public.orders.success');
     }
 }

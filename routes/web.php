@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\PreferenceController as AdminPreferenceController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\RedsysController;
+
+Route::post('/redsys/notification', [RedsysController::class, 'notification'])->name('redsys.notification');
 
 Route::get('/', [PublicProductController::class, 'index'])->name('product.index');
 
@@ -25,7 +28,13 @@ Route::get('/products/all', [PublicProductController::class, 'getProducts']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/checkout', [PublicOrderController::class, 'create'])->name('order.summary');
-    Route::post('/checkout/new', [PublicOrderController::class, 'store'])->name('order.checkout');
+    Route::post('/checkout/new', [PublicOrderController::class, 'store'])->name('order.store');
+    Route::post('/checkout/book', [PublicOrderController::class, 'update'])->name('order.update');
+    Route::get('/checkout/finish/{order}', [PublicOrderController::class, 'edit'])->name('order.edit');
+    Route::get('/bizum/form', [RedsysController::class, 'showForm']);
+    Route::post('/bizum/pay', [RedsysController::class, 'payWithBizum'])->name('redsys.pay');
+    Route::get('/bizum/success', [RedsysController::class, 'success'])->name('redsys.success');
+    Route::get('/bizum/fail', [RedsysController::class, 'fail'])->name('redsys.fail');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

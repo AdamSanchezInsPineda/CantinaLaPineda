@@ -82,21 +82,19 @@ export default class Cart {
         id = Number(id);
         cart = cart.filter(item => item.id !== id);
         this.storage.setItem(this.cartKey, JSON.stringify(cart));
-        Turbo.visit(window.location.href);
         // console.log("Producto eliminado. Carrito actualizado:", cart);
     }
 
-    async checkout() {
+    async checkout(url) {
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         let cart = this.getCart();
 
         if (cart.length === 0) {
-            // console.log("El carrito está vacío");
             return;
         }
 
         try {
-            const response = await fetch("/checkout/new", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -112,12 +110,35 @@ export default class Cart {
 
             const data = await response.json();
 
-            Turbo.visit("/");
+            Turbo.visit(`/checkout/finish/${data.order_id}`);
             // console.log("Compra realizada:", data);
 
             this.storage.removeItem(this.cartKey);
         } catch (error) {
             console.error("Error al hacer checkout:", error);
         }
+    }
+
+    updateQuantity(id, quantity) {
+        id = Number(id);
+        
+        let cart = this.getCart();
+        
+        const index = cart.findIndex(item => item.id === id);
+        
+        if (index !== -1) {
+            quantity = Math.max(1, parseInt(quantity));
+            cart[index].quantity = quantity;
+            
+            this.storage.setItem(this.cartKey, JSON.stringify(cart));
+        }
+        
+        return cart;
+    }
+
+    emptyCart() {
+        this.storage.setItem(this.cartKey, JSON.stringify([]));
+        
+        return [];
     }
 }

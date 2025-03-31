@@ -3,13 +3,13 @@ import Cart from '../Cart';
 let cart = new Cart();
 
 function initCheckout(){
-    const checkoutButton = document.getElementById("checkout-button");
+    const orderButton = document.getElementById("order-button");
 
     getCartProducts();
 
-    if (checkoutButton){
-        checkoutButton.removeEventListener("click", fetchOrder);
-        checkoutButton.addEventListener("click", fetchOrder);
+    if (orderButton){
+        orderButton.removeEventListener("click", fetchOrder);
+        orderButton.addEventListener("click", fetchOrder);
     }
 }
 
@@ -42,7 +42,7 @@ async function getCartProducts(){
 }
 
 function fetchOrder(){
-    cart.checkout();
+    cart.checkout("/checkout/new");
 }
 
 document.addEventListener("turbo:load", initCheckout);

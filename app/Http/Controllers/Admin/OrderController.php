@@ -109,4 +109,12 @@ class OrderController extends Controller
         
         return response()->json(['sales' => $salesData]);
     }
+
+    public function denyOrder(string $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = "denied";
+        $order->save();
+        return redirect()->route('admin.order.index');
+    }
 }

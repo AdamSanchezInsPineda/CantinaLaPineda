@@ -23,13 +23,17 @@
                         </div>
                         <div class="flex items-center justify-center">
                             <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700">
-                                <span class="hidden sm:block">Aceptar pedido</span>
+                                <span class="hidden sm:block">Escanear QR</span>
                                 <x-icons.accept class="size-6 block sm:hidden"/>
                             </button>
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700">
-                                <span class="hidden sm:block">Denegar pedido</span>
+                            <form action="{{ route('admin.order.deny', $order->id) }}" method="POST">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" onclick="return confirm('¿Seguro que quieres denegar este producto?')" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">
+                                    <span class="hidden sm:block">Pedido no recogido</span>
                                 <x-icons.cancel class="size-6 block sm:hidden"/>
-                            </button>
+                                </button>
+                            </form>      
                             <a href="{{ route('admin.order.show', $order->id) }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700 flex flex-row gap-2">
                                 <span class="hidden sm:block">Mostrar información</span>
                                 <x-icons.info class="size-6 block sm:hidden"/>

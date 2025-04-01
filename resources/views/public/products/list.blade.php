@@ -11,7 +11,7 @@
                         <div class="flex justify-between mt-5 ml-1">
                             <div>
                                 <p>{{ $product->name }}</p>
-                                <b>{{ $product->price }} €</b>
+                                <b>{{ number_format($product->price, 2) }} €</b>
                             </div>
                             <button id="product-{{ $product->id }}" class="bg-gray-800 text-white py-2 px-4 rounded-full mr-5 mb-3 h-[40px] hover:bg-gray-700 flex items-center justify-center gap-3">
                                 <span>Añadir</span>

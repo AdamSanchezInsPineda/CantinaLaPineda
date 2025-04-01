@@ -13,7 +13,7 @@
             </div>
             <div class="w-[500px] flex flex-col gap-2">
                 <h1 class="text-4xl font-extrabold">{{ $product->name }}</h1>
-                <p class="text-xl">{{ $product->price }} €</p>
+                <p class="text-xl">{{ number_format($product->price, 2) }} €</p>
                 <p class="break-words max-w-[500px] whitespace-pre-wrap text-sm text-gray-700">{{ $product->description }}</p>
                 @if (!$categoryParameters->isEmpty())
                     <h2 class="text-xl font-semibold">Personaliza tu producto</h2>

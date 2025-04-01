@@ -15,10 +15,16 @@ class UserController extends PublicController
             return redirect()->route('login');
         }
         else {
+            $current_user = auth()->user();
             $user = User::where('id', $id)->first();
-            $orders = Order::where('user_id', $user->id)->get();
-            $orderQuantity = Order::where('user_id', $user->id)->count();
-            return view("public.users.show", compact('user', 'orderQuantity', 'orders'));
+            if ($current_user->id == $user->id) {
+                $orders = Order::where('user_id', $user->id)->get();
+                $orderQuantity = Order::where('user_id', $user->id)->count();
+                return view("public.users.show", compact('user', 'orderQuantity', 'orders'));
+            }
+            else {
+                return redirect()->route('login');
+            }
         }
     }
 }

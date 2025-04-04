@@ -17,6 +17,7 @@
         "vite": "^6.0"
     },
     "dependencies": {
-        "@hotwired/turbo": "^8.0.12"
+        "@hotwired/turbo": "^8.0.12",
+        "html5-qrcode": "^2.3.8"
     }
 }

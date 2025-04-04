@@ -8,6 +8,7 @@
 
         <main class="flex flex-col gap-20">
             <div>
+                <div id="reader" style="width:300px; height:300px;"></div>
                 <b class="text-2xl ml-10">Pedidos por atender:</b>
                 @foreach($unattendedOrders as $order)
                     <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
@@ -68,4 +69,5 @@
         </main>
     </div>
     <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
+    <script src="{{ mix('resources/js/qrreader.js') }}" defer></script>
 </x-admin-layout>

@@ -15,9 +15,12 @@
         </header>
 
         <main class="flex flex-col gap-8">
+            <div class="mb-4 flex items-center justify-center">
+                <input type="text" id="searchInput" placeholder="Busca tu producto" class="px-4 py-2 border rounded-md w-[90%]">
+            </div>
 
             @foreach($products as $product)
-                <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
+                <div class="product-item border-b-2 sm:flex sm:items-center sm:justify-between">
                     <div class="flex items-center gap-4 ml-6">
                         @if ($product->images && !empty($product->images))
                             <img src="{{ asset('storage/' . $product->images[0]) }}" width="150">
@@ -29,8 +32,8 @@
                         <div>
                             <b class="text-xl">{{ $product->name }}</b>
                             <p class="text-lg">{{ number_format($product->price, 2, '.', '') }} €</p>
-                            <p class="text-sm">Categoria: {{ $product->category->name }}</p>
-                            <p class="text-sm">Codigo del producto: {{ $product->code }}</p>
+                            <p class="text-sm product-category">Categoria: {{ $product->category->name }}</p>
+                            <p class="text-sm product-code">Codigo del producto: {{ $product->code }}</p>
                         </div>              
                     </div>
                     <div class="flex items-center justify-center">
@@ -49,4 +52,5 @@
         </main>
     </div>
     <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
+    <script src="{{ mix('resources/js/searchbar/productsearcher.js') }}" defer></script>
 </x-admin-layout>

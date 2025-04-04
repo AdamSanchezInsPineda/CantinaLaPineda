@@ -19,9 +19,12 @@
         </header>
 
         <main class="flex flex-col gap-8">
+            <div class="mb-4 flex items-center justify-center">
+                <input type="text" id="searchInput" placeholder="Busca tu categoria" class="px-4 py-2 border rounded-md w-[90%]">
+            </div>
 
             @foreach($categories as $category)
-                <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
+                <div class="category-item border-b-2 sm:flex sm:items-center sm:justify-between">
                     <div class="flex items-center gap-4 ml-6">
                         <div>
                             <b class="text-xl ml-5">{{ $category->name }}</b>
@@ -42,4 +45,5 @@
         </main>
     </div>
     <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
+    <script src="{{ mix('resources/js/searchbar/categorysearcher.js') }}" defer></script>
 </x-admin-layout>

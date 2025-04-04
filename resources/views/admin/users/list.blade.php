@@ -9,9 +9,12 @@
         </header>
 
         <main class="flex flex-col gap-8">
+            <div class="mb-4 flex items-center justify-center">
+                <input type="text" id="searchInput" placeholder="Busca tu usuario" class="px-4 py-2 border rounded-md w-[90%]">
+            </div>
 
             @foreach($users as $user)
-                <div class="border-b-2 flex items-center justify-between">
+                <div class="user-item border-b-2 flex items-center justify-between">
                     <div class="flex items-center gap-4 ml-6">
                         <div class="">
                             <b class="text-xl">Nombre:<br> {{ $user->name }} {{ $user->surname }}</b>
@@ -41,4 +44,5 @@
         </main>
     </div>
     <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
+    <script src="{{ mix('resources/js/searchbar/usersearcher.js') }}" defer></script>
 </x-admin-layout>

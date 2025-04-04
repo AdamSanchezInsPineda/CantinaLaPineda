@@ -69,5 +69,5 @@
         </main>
     </div>
     <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
-    <script src="{{ mix('resources/js/qrreader.js') }}" defer></script>
+    <script type="module" src="{{ mix('resources/js/qrreader.js') }}" defer></script>
 </x-admin-layout>

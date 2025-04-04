@@ -1,25 +1,29 @@
 import { Html5Qrcode } from "html5-qrcode";
 function onScanSuccess(decodedText, decodedResult) {
-    // Aquí tendrás el valor del código QR escaneado
-    console.log(`Código QR descifrado: ${decodedText}`);
-
-    // Ahora envíalo al backend para desencriptarlo
-    fetch('/desencriptar-qr', {
-        method: 'POST',
-        body: JSON.stringify({ encryptedId: decodedText }),
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data); // Muestra los datos desencriptados
-    })
-    .catch(error => console.error('Error:', error));
+    // enviar al backend para desencriptar (no funciona)
+    //fetch('/qr-decrypt', {
+    //    method: 'POST',
+    //    body: JSON.stringify({ encryptedId: decodedText }),
+    //    headers: { 'Content-Type': 'application/json' }
+    //})
+    //.then(response => {
+    //    if (response.ok) {
+    //        const redirectUrl = response.headers.get('Location');
+    //        if (redirectUrl) {
+    //            window.location.href = redirectUrl;
+    //        }
+    //    } else {
+    //        alert(`Error del response: ${response.statusText}`);
+    //    }
+    //})
+    //.catch(error => alert(`Error del catch: ${error.message}`));
+    window.location.href = "/admin/order/1";
 }
 
-// Configurar el lector de QR
+// lector de QR
 const html5QrCode = new Html5Qrcode("reader");
 html5QrCode.start(
-    { facingMode: "environment" }, // Cámara trasera
-    { fps: 10, qrbox: 250 }, // Opciones de escaneo
+    { facingMode: "environment" }, // camara trasera
+    { fps: 10, qrbox: 250 }, // configuracion del scanner
     onScanSuccess
 );

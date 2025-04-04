@@ -26,11 +26,46 @@
                 </div>
             @endforeach
             <div class="flex flex-col gap-8">
-                <b class="flex justify-center align-center text-xl">Total del pedido: {{ $order->total_price }} €</b>
-                <div class="flex justify-center align-center">
-                    <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 hover:bg-gray-700">Aceptar pedido</button>
-                    <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 hover:bg-gray-700">Denegar pedido</button>
-                </div>
+                @if ($order->status == "confirmed")
+                    <b class="flex justify-center align-center text-xl">Ya ha sido recogido</b>
+                @endif
+                @if ($order->status == "denied")
+                    <b class="flex justify-center align-center text-xl">Ha sido denegado previamente</b>
+                @endif
+                @if ($order->status == "failed")
+                    <b class="flex justify-center align-center text-xl">Ha habido algun error durante la compra</b>
+                @endif
+                @if ($order->status == "pedning")
+                    <b class="flex justify-center align-center text-xl">Pedido por completar</b>
+                @endif
+
+                @if ($order->status == "ordered" || $order->status == "reserved")
+                    @if ($order->status == "ordered")
+                        <b class="flex justify-center align-center text-xl">Pagado con bizum</b>
+                    @endif
+                    @if ($order->status == "reserved")
+                        <b class="flex justify-center align-center text-xl">Reservado</b>
+                    @endif
+                    <b class="flex justify-center align-center text-xl">Total del pedido: {{ $order->total_price }} €</b>
+                    <div class="flex justify-center align-center">
+                        <form action="{{ route('admin.order.accept', $order->id) }}" method="POST">
+                            @csrf
+                            @method('POST')
+                            <button type="submit" onclick="return confirm('¿Seguro que quieres aceptar este pedido?')" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 hover:bg-gray-700">
+                                <span class="hidden sm:block">Aceptar pedido</span>
+                                <x-icons.accept class="size-6 block sm:hidden"/>
+                            </button>
+                        </form>    
+                        <form action="{{ route('admin.order.deny', $order->id) }}" method="POST">
+                            @csrf
+                            @method('POST')
+                            <button type="submit" onclick="return confirm('¿Seguro que quieres denegar este pedido?')" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 hover:bg-gray-700">
+                                <span class="hidden sm:block">Denegar pedido</span>
+                                <x-icons.cancel class="size-6 block sm:hidden"/>
+                            </button>
+                        </form>    
+                    </div>
+                @endif
             </div>
         </main>
     </div>

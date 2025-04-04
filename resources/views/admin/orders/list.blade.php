@@ -4,11 +4,13 @@
         <header class="flex justify-center items-center gap-5 pt-10 border-b-2 mb-12">
             <button id="toggle-btn" class="lg:hidden mb-10"><x-icons.hamburguer class="size-8"/></button>
             <b class="text-4xl mb-10">Pedidos:</b>
+            <a href="{{ route('admin.order.qrscanner') }}" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700">
+                <span class="hidden sm:block">Escanear QR</span>
+            </a>
         </header>
 
         <main class="flex flex-col gap-20">
             <div>
-                <div id="reader" style="width:300px; height:300px;"></div>
                 <b class="text-2xl ml-10">Pedidos por atender:</b>
                 @foreach($unattendedOrders as $order)
                     <div class="border-b-2 sm:flex sm:items-center sm:justify-between">
@@ -23,14 +25,10 @@
                             </div>              
                         </div>
                         <div class="flex items-center justify-center">
-                            <button class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 xl:h-[40px] hover:bg-gray-700">
-                                <span class="hidden sm:block">Escanear QR</span>
-                                <x-icons.accept class="size-6 block sm:hidden"/>
-                            </button>
                             <form action="{{ route('admin.order.deny', $order->id) }}" method="POST">
                                 @csrf
                                 @method('POST')
-                                <button type="submit" onclick="return confirm('¿Seguro que quieres denegar este producto?')" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">
+                                <button type="submit" onclick="return confirm('¿Seguro que quieres denegar este pedido?')" class="bg-black text-white py-2 px-4 rounded-md mr-5 mb-3 h-[40px] hover:bg-gray-700">
                                     <span class="hidden sm:block">Pedido no recogido</span>
                                 <x-icons.cancel class="size-6 block sm:hidden"/>
                                 </button>
@@ -69,5 +67,4 @@
         </main>
     </div>
     <script src="{{ mix('resources/js/displayadminasideresponsive.js') }}" defer></script>
-    <script type="module" src="{{ mix('resources/js/qrreader.js') }}" defer></script>
 </x-admin-layout>

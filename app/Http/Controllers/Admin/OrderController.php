@@ -117,4 +117,26 @@ class OrderController extends Controller
         $order->save();
         return redirect()->route('admin.order.index');
     }
+
+    public function acceptOrder(string $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = "confirmed";
+        $order->save();
+        return redirect()->route('admin.order.index');
+    }
+
+    public function scanQR() 
+    {
+        return view("admin.orders.qrscanner");
+    }
+
+    // no funciona
+    public function readQR()
+    {
+        $encryptedId = $request->input('encryptedId');
+        $decryptedId = $this->decrypt($encryptedId);
+        $redirectUrl = route('admin.order.index');
+        return response('', 302)->header('Location', "/admin/order");
+    }
 }
